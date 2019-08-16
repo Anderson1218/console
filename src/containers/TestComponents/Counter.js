@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {increment, decrement} from '../../store/actions';
+import {increment, decrement} from '../../redux/actions';
 
 const style = {
   display: "flex",
