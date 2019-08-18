@@ -3,7 +3,9 @@ import './App.css';
 //import Layout from './components/Layout/Layout'
 import { Route, Switch } from 'react-router-dom';
 import Homepage from './pages/homepage/homepage.component'
-import Counter from './containers/TestComponents/Counter'
+import ShopPage from './pages/shop/shop.component';
+// import Counter from './containers/TestComponents/Counter'
+
 
 //This project use css modules 
 function App() {
@@ -11,7 +13,7 @@ function App() {
     <div>
       <Switch>
         <Route path="/" exact component={Homepage}/>
-        <Route path="/counter" exact component={Counter}/>
+        <Route path="/shop" component={ShopPage}/>
       </Switch>
     </div>
   );
