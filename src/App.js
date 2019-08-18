@@ -9,7 +9,7 @@ import Header from "./components/header/header.component";
 import { auth } from "./firebase/firebase.utils";
 
 //This project use css modules
-class App extends React.Component() {
+class App extends React.Component {
   constructor() {
     super();
     this.state = {
