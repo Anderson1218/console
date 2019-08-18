@@ -1,5 +1,2 @@
 // Aggregating modules
-export {
-    increment,
-    decrement
-} from './counter';
+export { increment, decrement } from "./counter";
