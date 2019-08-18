@@ -4,13 +4,14 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Homepage from './pages/homepage/homepage.component'
 import ShopPage from './pages/shop/shop.component';
-// import Counter from './containers/TestComponents/Counter'
+import Header from './components/header/header.component'
 
 
 //This project use css modules 
 function App() {
   return (
     <div>
+      <Header />
       <Switch>
         <Route path="/" exact component={Homepage}/>
         <Route path="/shop" component={ShopPage}/>
