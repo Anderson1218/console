@@ -25,6 +25,7 @@ class App extends React.Component {
         const userRef = await createUserProfileDocument(userAuth);
 
         //to check if the database has updated at that ref
+        //observable pattern
         userRef.onSnapshot(snapShot => {
           setCurrentUser({
             id: snapShot.id,
