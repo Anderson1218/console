@@ -5,9 +5,6 @@ import rootReducer from "./root-reducer";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 const middlewares = [thunk];
 
-if (process.env.NODE_ENV === "development") {
-}
-
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(...middlewares))
