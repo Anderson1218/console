@@ -12,4 +12,12 @@
     display: flex;
     justify-content: space-between;
   }
+
+  h1 {
+    cursor: pointer;
+  }
+
+  h1:hover {
+    color: grey;
+  }
 }

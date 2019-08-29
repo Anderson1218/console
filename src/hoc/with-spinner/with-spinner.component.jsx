@@ -1,5 +1,5 @@
 import React from "react";
-import Spinner from "react-bootstrap/Spinner";
+import { Dimmer, Loader } from "semantic-ui-react";
 
 const styles = {
   display: "flex",
@@ -11,9 +11,9 @@ const styles = {
 const WithSpinner = WrappedComponent => ({ isLoading, ...otherProps }) => {
   return isLoading ? (
     <div style={styles}>
-      <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner>
+      <Dimmer active>
+        <Loader size="large">Loading...</Loader>
+      </Dimmer>
     </div>
   ) : (
     <WrappedComponent {...otherProps} />

@@ -3,13 +3,15 @@ import firebase from "firebase/app";
 //auto attached to firebase
 import "firebase/firestore";
 import "firebase/auth";
+import "firebase/storage";
+// import "firebase/database";
 
 const config = {
   apiKey: "AIzaSyA5IQkLsRAa4Ur_ToFPxoaa5hj0oPGthd0",
   authDomain: "an-store.firebaseapp.com",
   databaseURL: "https://an-store.firebaseio.com",
   projectId: "an-store",
-  storageBucket: "",
+  storageBucket: "an-store.appspot.com",
   messagingSenderId: "267616470835",
   appId: "1:267616470835:web:392f240d23b65b24"
 };
