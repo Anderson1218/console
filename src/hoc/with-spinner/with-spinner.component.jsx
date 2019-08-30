@@ -12,7 +12,7 @@ const WithSpinner = WrappedComponent => ({ isLoading, ...otherProps }) => {
   return isLoading ? (
     <div style={styles}>
       <Dimmer active>
-        <Loader size="large">Loading...</Loader>
+        <Loader size="large" content={"Loading..."} />
       </Dimmer>
     </div>
   ) : (

@@ -1,10 +1,9 @@
 import firebase from "firebase/app";
-
 //auto attached to firebase
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/storage";
-// import "firebase/database";
+//import "firebase/database";
 
 const config = {
   apiKey: "AIzaSyA5IQkLsRAa4Ur_ToFPxoaa5hj0oPGthd0",
@@ -30,13 +29,14 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   const snapShot = await userRef.get();
 
   if (!snapShot.exists) {
-    const { displayName, email } = userAuth;
+    const { displayName, email, photoURL } = userAuth;
     const createdAt = new Date();
     try {
       await userRef.set({
         displayName,
         email,
         createdAt,
+        photoURL,
         ...additionalData
       });
     } catch (error) {
@@ -63,22 +63,21 @@ export const convertCollectionsSnapshotToMap = collections => {
   }, {});
 };
 
-export const addCollectionAndDocumnents = async (
-  collectionKey,
-  objectsToAdd
-) => {
-  const collectionRef = firestore.collection(collectionKey);
-  const batch = firestore.batch();
-  objectsToAdd.forEach(obj => {
-    const newDocRef = collectionRef.doc();
-    batch.set(newDocRef, obj);
-  });
-  return await batch.commit();
-};
+// export const addCollectionAndDocumnents = async (
+//   collectionKey,
+//   objectsToAdd
+// ) => {
+//   const collectionRef = firestore.collection(collectionKey);
+//   const batch = firestore.batch();
+//   objectsToAdd.forEach(obj => {
+//     const newDocRef = collectionRef.doc();
+//     batch.set(newDocRef, obj);
+//   });
+//   return await batch.commit();
+// };
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-
 //other provider(facebook,...) can also be passed into signInWithPopup
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 export default firebase;

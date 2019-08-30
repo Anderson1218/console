@@ -4,6 +4,8 @@ import CustomButton from "../custom-button/custom-button.component";
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 import "./sign-up.styles.scss";
 
+import md5 from "md5";
+
 class SignUp extends React.Component {
   constructor() {
     super();
@@ -28,6 +30,10 @@ class SignUp extends React.Component {
         email,
         password
       );
+      await user.updateProfile({
+        displayName: this.state.displayName,
+        photoURL: `http://gravatar.com/avatar/${md5(user.email)}?d=identicon`
+      });
       await createUserProfileDocument(user, { displayName });
       //clear the form after submitting
       this.setState({
