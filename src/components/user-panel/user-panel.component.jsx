@@ -7,8 +7,17 @@ import {
   selectPhotoURL
 } from "../../redux/user/user.selectors";
 import { signOutStartAsync } from "../../redux/user/user.action";
+import { Link } from "react-router-dom";
 
 const dropdownOptions = signOutStartAsync => [
+  {
+    key: "shopping",
+    text: (
+      <Link to="/shop" style={{ color: "black" }}>
+        Go shopping
+      </Link>
+    )
+  },
   {
     key: "avatar",
     text: <span>Change Avatar</span>

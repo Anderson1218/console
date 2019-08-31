@@ -5,9 +5,10 @@ import ColorPanel from "../color-panel/color-panel.component";
 import SidePanel from "../side-panel/side-panel.component";
 import Messages from "../messages/messages.component";
 import MetaPanel from "../meta-panel/meta-panel.component";
+import "./chat.styles.scss";
 
 const Chat = () => (
-  <Grid columns="equal" className="app" style={{ background: "#eee" }}>
+  <Grid columns="equal" className="chat" style={{ background: "#eee" }}>
     <ColorPanel />
     <SidePanel />
 

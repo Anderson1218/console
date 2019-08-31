@@ -8,7 +8,7 @@ import CheckoutPage from "./pages/checkout/checkout.component";
 import SignInPage from "./pages/signin/sign-in-page.component";
 import SignUpPage from "./pages/signup/sign-up-page.component";
 
-import Header from "./components/header/header.component";
+// import Header from "./components/header/header.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.action";
@@ -21,6 +21,7 @@ class App extends React.Component {
   componentDidMount() {
     const { setCurrentUser } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      console.log("auth changed!", userAuth);
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
@@ -46,7 +47,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header />
+        {/* <Header /> */}
         <Switch>
           {/* <Route exact path="/" component={Homepage} /> */}
           <Route
