@@ -1,8 +1,11 @@
 import React from "react";
 import firebase from "../../firebase/firebase.utils";
-import { firestore } from "../../firebase/firebase.utils";
+import { firestore, storage } from "../../firebase/firebase.utils";
 import { Segment, Button, Input } from "semantic-ui-react";
 import FileModal from "../file-modal/file-modal.component";
+import ProgressBar from "../progress-bar/progress-bar.component";
+
+import uuidv4 from "uuid/v4";
 import "./message-form.styles.scss";
 
 class MessageForm extends React.Component {
@@ -10,7 +13,11 @@ class MessageForm extends React.Component {
     message: "",
     loading: false,
     errors: [],
-    modal: false
+    modal: false,
+    storageRef: storage.ref(),
+    uploadTask: null,
+    uploadState: "",
+    percentUploaded: 0
   };
 
   openModal = () => this.setState({ modal: true });
@@ -18,14 +25,76 @@ class MessageForm extends React.Component {
   closeModal = () => this.setState({ modal: false });
 
   uploadFile = (file, metadata) => {
-    console.log(file, metadata);
+    const { currentChannel } = this.props;
+    const pathToUpload = currentChannel.id;
+    const ref = firestore
+      .collection("channels")
+      .doc(currentChannel.id)
+      .collection("messages")
+      .doc();
+    const filePath = `chat/public/${uuidv4()}.jpg`;
+
+    this.setState(
+      {
+        uploadState: "uploading",
+        uploadTask: this.state.storageRef.child(filePath).put(file, metadata)
+      },
+      () => {
+        this.state.uploadTask.on(
+          "state_changed",
+          snap => {
+            const percentUploaded = Math.round(
+              (snap.bytesTransferred / snap.totalBytes) * 100
+            );
+            this.setState({ percentUploaded });
+          },
+          err => {
+            console.error(err);
+            this.setState({
+              errors: this.state.errors.concat(err),
+              uploadState: "error",
+              uploadTask: null
+            });
+          },
+          () => {
+            this.state.uploadTask.snapshot.ref
+              .getDownloadURL()
+              .then(downloadUrl => {
+                this.sendFileMessage(downloadUrl, ref, pathToUpload);
+              })
+              .catch(err => {
+                console.error(err);
+                this.setState({
+                  errors: this.state.errors.concat(err),
+                  uploadState: "error",
+                  uploadTask: null
+                });
+              });
+          }
+        );
+      }
+    );
+  };
+
+  sendFileMessage = (fileUrl, ref, pathToUpload) => {
+    ref
+      .set(this.createMessage(fileUrl))
+      .then(() => {
+        this.setState({ uploadState: "done" });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({
+          errors: this.state.errors.concat(err)
+        });
+      });
   };
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  createMessage = () => {
+  createMessage = (fileUrl = null) => {
     const { currentUser } = this.props;
     const message = {
       timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -33,9 +102,13 @@ class MessageForm extends React.Component {
         id: currentUser.id,
         name: currentUser.displayName,
         avatar: currentUser.photoURL
-      },
-      content: this.state.message
+      }
     };
+    if (fileUrl !== null) {
+      message["image"] = fileUrl;
+    } else {
+      message["content"] = this.state.message;
+    }
     return message;
   };
 
@@ -70,7 +143,14 @@ class MessageForm extends React.Component {
   };
 
   render() {
-    const { errors, message, loading, modal } = this.state;
+    const {
+      errors,
+      message,
+      loading,
+      modal,
+      uploadState,
+      percentUploaded
+    } = this.state;
     return (
       <Segment className="message__form">
         <Input
@@ -99,6 +179,7 @@ class MessageForm extends React.Component {
           />
           <Button
             onClick={this.openModal}
+            disabled={uploadState === "uploading"}
             color="teal"
             content="Upload Media"
             labelPosition="right"
@@ -109,6 +190,10 @@ class MessageForm extends React.Component {
           modal={modal}
           closeModal={this.closeModal}
           uploadFile={this.uploadFile}
+        />
+        <ProgressBar
+          uploadState={uploadState}
+          percentUploaded={percentUploaded}
         />
       </Segment>
     );

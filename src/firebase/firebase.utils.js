@@ -78,6 +78,6 @@ export const convertCollectionsSnapshotToMap = collections => {
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-//other provider(facebook,...) can also be passed into signInWithPopup
+export const storage = firebase.storage();
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 export default firebase;

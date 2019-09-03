@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { fetchCollectionStartAsync } from "../../redux/shop/shop.action";
 import CollectionsOverviewContainer from "../../components/collections-overview/collections-overview.container";
 import CollectionPageContainer from "../collection/collection.container";
+import Header from "../../components/header/header.component";
 
 class ShopPage extends React.Component {
   componentDidMount() {
@@ -15,6 +16,7 @@ class ShopPage extends React.Component {
     const { match } = this.props;
     return (
       <div className="shop-page">
+        <Header />
         <Route
           exact
           path={`${match.path}`}
