@@ -2,17 +2,23 @@ import React from "react";
 import firebase from "../../firebase/firebase.utils";
 import { firestore } from "../../firebase/firebase.utils";
 import { Segment, Button, Input } from "semantic-ui-react";
+import FileModal from "../file-modal/file-modal.component";
 import "./message-form.styles.scss";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { selectCurrentUser } from "../../redux/user/user.selectors";
-import { selectCurrentChannel } from "../../redux/channel/channel.selectors";
 
 class MessageForm extends React.Component {
   state = {
     message: "",
     loading: false,
-    errors: []
+    errors: [],
+    modal: false
+  };
+
+  openModal = () => this.setState({ modal: true });
+
+  closeModal = () => this.setState({ modal: false });
+
+  uploadFile = (file, metadata) => {
+    console.log(file, metadata);
   };
 
   handleChange = event => {
@@ -64,8 +70,7 @@ class MessageForm extends React.Component {
   };
 
   render() {
-    const { errors, message, loading } = this.state;
-
+    const { errors, message, loading, modal } = this.state;
     return (
       <Segment className="message__form">
         <Input
@@ -88,25 +93,26 @@ class MessageForm extends React.Component {
             onClick={this.sendMessage}
             disabled={loading}
             color="orange"
-            content="Add Reply"
+            content="Send Messages"
             labelPosition="left"
             icon="edit"
           />
           <Button
+            onClick={this.openModal}
             color="teal"
             content="Upload Media"
             labelPosition="right"
             icon="cloud upload"
           />
         </Button.Group>
+        <FileModal
+          modal={modal}
+          closeModal={this.closeModal}
+          uploadFile={this.uploadFile}
+        />
       </Segment>
     );
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-  currentChannel: selectCurrentChannel
-});
-
-export default connect(mapStateToProps)(MessageForm);
+export default MessageForm;

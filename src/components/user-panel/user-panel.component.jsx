@@ -36,7 +36,7 @@ const UserPanel = ({ photoURL, displayName, signOutStartAsync }) => {
           {/* App Header */}
           <Header floated="left" inverted as="h2">
             <Icon name="code" />
-            <Header.Content>Chat Panel</Header.Content>
+            <Header.Content>Chat</Header.Content>
           </Header>
           {/* User Dropdown  */}
           <Header style={{ padding: "0.25em" }} as="h4" inverted>

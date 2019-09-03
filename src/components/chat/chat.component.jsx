@@ -5,21 +5,40 @@ import ColorPanel from "../color-panel/color-panel.component";
 import SidePanel from "../side-panel/side-panel.component";
 import Messages from "../messages/messages.component";
 import MetaPanel from "../meta-panel/meta-panel.component";
+
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
+import { selectCurrentChannel } from "../../redux/channel/channel.selectors";
+
 import "./chat.styles.scss";
 
-const Chat = () => (
-  <Grid columns="equal" className="chat" style={{ background: "#eee" }}>
-    <ColorPanel />
-    <SidePanel />
+const Chat = props => {
+  //currentChannel is null in first render
+  return (
+    <Grid columns="equal" className="chat" style={{ background: "#eee" }}>
+      <ColorPanel />
+      <SidePanel />
 
-    <Grid.Column style={{ marginLeft: 320 }}>
-      <Messages />
-    </Grid.Column>
+      <Grid.Column style={{ marginLeft: 320 }}>
+        {props.currentChannel && (
+          <Messages
+            currentUser={props.currentUser}
+            currentChannel={props.currentChannel}
+          />
+        )}
+      </Grid.Column>
 
-    <Grid.Column width={4}>
-      <MetaPanel />
-    </Grid.Column>
-  </Grid>
-);
+      <Grid.Column width={4}>
+        <MetaPanel />
+      </Grid.Column>
+    </Grid>
+  );
+};
 
-export default Chat;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  currentChannel: selectCurrentChannel
+});
+
+export default connect(mapStateToProps)(Chat);
