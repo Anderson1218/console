@@ -12,7 +12,11 @@ import { firestore } from "../../firebase/firebase.utils";
 class Messages extends React.Component {
   state = {
     messages: [],
-    messagesLoading: true
+    messagesLoading: true,
+    numUniqueUsers: "",
+    searchTerm: "",
+    searchLoading: false,
+    searchResults: []
   };
 
   componentDidMount() {
@@ -33,6 +37,18 @@ class Messages extends React.Component {
     this.unsubscribeFromMessages();
   }
 
+  countUniqueUsers = messages => {
+    const uniqueUsers = messages.reduce((acc, message) => {
+      if (!acc.includes(message.user.name)) {
+        acc.push(message.user.name);
+      }
+      return acc;
+    }, []);
+    const plural = uniqueUsers.length > 1 || uniqueUsers.length === 0;
+    const numUniqueUsers = `${uniqueUsers.length} user${plural ? "s" : ""}`;
+    this.setState({ numUniqueUsers });
+  };
+
   addListeners = channelId => {
     this.addMessageListener(channelId);
   };
@@ -52,7 +68,36 @@ class Messages extends React.Component {
         messages: loadedMessages,
         messagesLoading: false
       });
+      this.countUniqueUsers(loadedMessages);
     });
+  };
+
+  displayChannelName = channel => (channel ? `#${channel.name}` : "");
+
+  handleSearchChange = event => {
+    this.setState(
+      {
+        searchTerm: event.target.value,
+        searchLoading: true
+      },
+      () => this.handleSearchMessages()
+    );
+  };
+
+  handleSearchMessages = () => {
+    const channelMessages = [...this.state.messages];
+    const regex = new RegExp(this.state.searchTerm, "gi");
+    const searchResults = channelMessages.reduce((acc, message) => {
+      if (
+        (message.content && message.content.match(regex)) ||
+        message.user.name.match(regex)
+      ) {
+        acc.push(message);
+      }
+      return acc;
+    }, []);
+    this.setState({ searchResults });
+    setTimeout(() => this.setState({ searchLoading: false }), 1000);
   };
 
   renderMessages = messages =>
@@ -66,15 +111,28 @@ class Messages extends React.Component {
     ));
 
   render() {
-    const { messages } = this.state;
+    const {
+      messages,
+      numUniqueUsers,
+      searchTerm,
+      searchResults,
+      searchLoading
+    } = this.state;
     const { currentUser, currentChannel } = this.props;
     return (
       <React.Fragment>
-        <MessageHeader />
+        <MessageHeader
+          channelName={this.displayChannelName(currentChannel)}
+          numUniqueUsers={numUniqueUsers}
+          handleSearchChange={this.handleSearchChange}
+          searchLoading={searchLoading}
+        />
 
         <Segment>
           <Comment.Group className="messages">
-            {this.renderMessages(messages)}
+            {searchTerm
+              ? this.renderMessages(searchResults)
+              : this.renderMessages(messages)}
           </Comment.Group>
         </Segment>
 

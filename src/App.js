@@ -9,6 +9,7 @@ import SignInPage from "./pages/signin/sign-in-page.component";
 import SignUpPage from "./pages/signup/sign-up-page.component";
 
 // import Header from "./components/header/header.component";
+// import ColorPanel from "./components/color-panel/color-panel.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.action";
