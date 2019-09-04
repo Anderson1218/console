@@ -7,6 +7,11 @@ export const selectCurrentUser = createSelector(
   user => user.currentUser
 );
 
+export const selectUserIsLoading = createSelector(
+  [selectUser],
+  user => user.isLoading
+);
+
 export const selectDisplayName = createSelector(
   [selectCurrentUser],
   currentUser => currentUser.displayName

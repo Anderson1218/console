@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { fetchCollectionStartAsync } from "../../redux/shop/shop.action";
 import CollectionsOverviewContainer from "../../components/collections-overview/collections-overview.container";
 import CollectionPageContainer from "../collection/collection.container";
-import Header from "../../components/header/header.component";
+import { Grid } from "semantic-ui-react";
 
 class ShopPage extends React.Component {
   componentDidMount() {
@@ -15,8 +15,7 @@ class ShopPage extends React.Component {
   render() {
     const { match } = this.props;
     return (
-      <div className="shop-page">
-        <Header />
+      <Grid.Column style={{ marginLeft: 320 }}>
         <Route
           exact
           path={`${match.path}`}
@@ -27,7 +26,7 @@ class ShopPage extends React.Component {
           path={`${match.path}/:collectionId`}
           component={CollectionPageContainer}
         />
-      </div>
+      </Grid.Column>
     );
   }
 }

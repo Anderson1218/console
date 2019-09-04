@@ -2,6 +2,7 @@ import React from "react";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
+import { Link } from "react-router-dom";
 import "./sign-up.styles.scss";
 
 import md5 from "md5";
@@ -92,6 +93,7 @@ class SignUp extends React.Component {
             required
           />
           <CustomButton type="submit">SIGN UP</CustomButton>
+          <Link to="/signin">go to sign in</Link>
         </form>
       </div>
     );

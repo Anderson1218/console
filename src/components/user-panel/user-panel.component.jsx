@@ -6,18 +6,10 @@ import {
   selectDisplayName,
   selectPhotoURL
 } from "../../redux/user/user.selectors";
+import { Route } from "react-router-dom";
 import { signOutStartAsync } from "../../redux/user/user.action";
-import { Link } from "react-router-dom";
 
 const dropdownOptions = signOutStartAsync => [
-  {
-    key: "shopping",
-    text: (
-      <Link to="/shop" style={{ color: "black" }}>
-        Go shopping
-      </Link>
-    )
-  },
   {
     key: "avatar",
     text: <span>Change Avatar</span>
@@ -35,8 +27,25 @@ const UserPanel = ({ photoURL, displayName, signOutStartAsync }) => {
         <Grid.Row style={{ padding: "1.2em", margin: 0 }}>
           {/* App Header */}
           <Header floated="left" inverted as="h2">
-            <Icon name="code" />
-            <Header.Content>Chat</Header.Content>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <>
+                  <Icon name="chat" />
+                  <Header.Content>Chat</Header.Content>
+                </>
+              )}
+            />
+            <Route
+              path="/shop"
+              render={() => (
+                <>
+                  <Icon name="shop" />
+                  <Header.Content>Shop</Header.Content>
+                </>
+              )}
+            />
           </Header>
           {/* User Dropdown  */}
           <Header style={{ padding: "0.25em" }} as="h4" inverted>

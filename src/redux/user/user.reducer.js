@@ -2,6 +2,7 @@ import UserActionTypes from "./user.types";
 
 const INITIAL_STATE = {
   currentUser: null,
+  isLoading: true,
   error: null
 };
 
@@ -11,6 +12,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case UserActionTypes.SET_CURRENT_USER:
       return {
         ...state,
+        isLoading: false,
         currentUser: action.payload
       };
     case UserActionTypes.SIGN_OUT_SUCCESS:

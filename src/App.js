@@ -1,20 +1,24 @@
 import React from "react";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
+import PrivateRoute from "./components/private-route/private-route.component";
+import { Dimmer, Loader } from "semantic-ui-react";
 
+import Layout from "./components/layout/layout.component";
 import Homepage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import CheckoutPage from "./pages/checkout/checkout.component";
 import SignInPage from "./pages/signin/sign-in-page.component";
 import SignUpPage from "./pages/signup/sign-up-page.component";
 
-// import Header from "./components/header/header.component";
-// import ColorPanel from "./components/color-panel/color-panel.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.action";
 import { createStructuredSelector } from "reselect";
-import { selectCurrentUser } from "./redux/user/user.selectors";
+import {
+  selectCurrentUser,
+  selectUserIsLoading
+} from "./redux/user/user.selectors";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -46,19 +50,17 @@ class App extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        {/* <Header /> */}
+    const { isLoading } = this.props;
+    return isLoading ? (
+      <Dimmer active>
+        <Loader size="large" content={"Loading..."} />
+      </Dimmer>
+    ) : (
+      <Layout currentUser={this.props.currentUser}>
         <Switch>
-          {/* <Route exact path="/" component={Homepage} /> */}
-          <Route
-            exact
-            path="/"
-            render={() =>
-              this.props.currentUser ? <Homepage /> : <Redirect to="/signin" />
-            }
-          />
-          <Route path="/shop" component={ShopPage} />
+          <PrivateRoute exact path="/" component={Homepage} />
+          <PrivateRoute path="/shop" component={ShopPage} />
+          <PrivateRoute exact path="/checkout" component={CheckoutPage} />
           <Route
             exact
             path="/signin"
@@ -67,15 +69,15 @@ class App extends React.Component {
             }
           />
           <Route exact path="/signup" component={SignUpPage} />
-          <Route exact path="/checkout" component={CheckoutPage} />
         </Switch>
-      </div>
+      </Layout>
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  isLoading: selectUserIsLoading
 });
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
