@@ -46,6 +46,15 @@ const UserPanel = ({ photoURL, displayName, signOutStartAsync }) => {
                 </>
               )}
             />
+            <Route
+              path="/checkout"
+              render={() => (
+                <>
+                  <Icon name="money" />
+                  <Header.Content>checkout</Header.Content>
+                </>
+              )}
+            />
           </Header>
           {/* User Dropdown  */}
           <Header style={{ padding: "0.25em" }} as="h4" inverted>

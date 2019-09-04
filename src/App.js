@@ -50,30 +50,40 @@ class App extends React.Component {
   }
 
   render() {
-    const { isLoading } = this.props;
+    const { isLoading, currentUser } = this.props;
     return isLoading ? (
       <Dimmer active>
         <Loader size="large" content={"Loading..."} />
       </Dimmer>
     ) : (
-      <Layout currentUser={this.props.currentUser}>
+      <Layout currentUser={currentUser}>
         <Switch>
-          <PrivateRoute exact path="/" component={Homepage} />
-          <PrivateRoute path="/shop" component={ShopPage} />
-          <PrivateRoute exact path="/checkout" component={CheckoutPage} />
+          <PrivateRoute
+            exact
+            path="/"
+            isAuthenticated={currentUser}
+            component={Homepage}
+          />
+          <PrivateRoute
+            path="/shop"
+            isAuthenticated={currentUser}
+            component={ShopPage}
+          />
+          <PrivateRoute
+            exact
+            path="/checkout"
+            isAuthenticated={currentUser}
+            component={CheckoutPage}
+          />
           <Route
             exact
             path="/signin"
-            render={() =>
-              this.props.currentUser ? <Redirect to="/" /> : <SignInPage />
-            }
+            render={() => (currentUser ? <Redirect to="/" /> : <SignInPage />)}
           />
           <Route
             exact
             path="/signup"
-            render={() =>
-              this.props.currentUser ? <Redirect to="/" /> : <SignUpPage />
-            }
+            render={() => (currentUser ? <Redirect to="/" /> : <SignUpPage />)}
           />
         </Switch>
       </Layout>
