@@ -1,17 +1,14 @@
 import React from "react";
 import { Route, Redirect } from "react-router";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 
-const PrivateRoute = ({
-  component: Component,
-  isAuthenticated,
-  isLoading,
-  ...rest
-}) => (
+const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      isAuthenticated && !isLoading ? (
+      isAuthenticated ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -25,9 +22,8 @@ const PrivateRoute = ({
   />
 );
 
-const mapStateToProps = state => ({
-  isLoading: state.user.isLoading,
-  isAuthenticated: state.user.currentUser !== null
+const mapStateToProps = createStructuredSelector({
+  isAuthenticated: selectCurrentUser
 });
 
 export default connect(mapStateToProps)(PrivateRoute);
