@@ -7,7 +7,7 @@ const Layout = props => {
   return (
     <>
       <Grid columns="equal" style={{ background: "#eee" }}>
-        <ColorPanel />
+        {props.currentUser && <ColorPanel />}
         {props.currentUser && <SidePanel />}
         {props.children}
       </Grid>

@@ -1,9 +1,8 @@
 import firebase from "firebase/app";
-//auto attached to firebase
+//auto attached to firebase after importing
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/storage";
-//import "firebase/database";
 
 const config = {
   apiKey: "AIzaSyA5IQkLsRAa4Ur_ToFPxoaa5hj0oPGthd0",
@@ -40,7 +39,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         ...additionalData
       });
     } catch (error) {
-      console.log("error creating user", error.message);
+      console.log("create user profile document fail", error.message);
     }
   }
   //return userRef for future usage
@@ -62,19 +61,6 @@ export const convertCollectionsSnapshotToMap = collections => {
     return accumulator;
   }, {});
 };
-
-// export const addCollectionAndDocumnents = async (
-//   collectionKey,
-//   objectsToAdd
-// ) => {
-//   const collectionRef = firestore.collection(collectionKey);
-//   const batch = firestore.batch();
-//   objectsToAdd.forEach(obj => {
-//     const newDocRef = collectionRef.doc();
-//     batch.set(newDocRef, obj);
-//   });
-//   return await batch.commit();
-// };
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

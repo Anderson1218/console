@@ -15,10 +15,37 @@ const userReducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         currentUser: action.payload
       };
+    case UserActionTypes.SIGN_UP_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case UserActionTypes.EMAIL_SIGN_IN_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case UserActionTypes.GOOGLE_SIGN_IN_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case UserActionTypes.SIGN_OUT_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case UserActionTypes.SIGN_UP_SUCCESS:
+      return {
+        ...state
+      };
+    case UserActionTypes.SIGN_IN_SUCCESS:
+      return {
+        ...state
+      };
     case UserActionTypes.SIGN_OUT_SUCCESS:
       return {
         ...state,
-        currentUser: null,
         error: null
       };
     case UserActionTypes.SIGN_IN_FAILURE:
@@ -26,6 +53,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case UserActionTypes.SIGN_UP_FAILURE:
       return {
         ...state,
+        isLoading: false,
         error: action.payload
       };
 

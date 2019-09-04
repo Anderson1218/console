@@ -1,11 +1,10 @@
 import React from "react";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
-import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 import { Link } from "react-router-dom";
 import "./sign-up.styles.scss";
-
-import md5 from "md5";
+import { signUpStartAsync } from "../../redux/user/user.action";
+import { connect } from "react-redux";
 
 class SignUp extends React.Component {
   constructor() {
@@ -18,34 +17,20 @@ class SignUp extends React.Component {
     };
   }
 
-  handleSubmit = async e => {
+  handleSubmit = e => {
     e.preventDefault();
     const { displayName, email, password, confirmPassword } = this.state;
     if (password !== confirmPassword) {
       alert("passwords don't match");
       return;
     }
-
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      await user.updateProfile({
-        displayName: this.state.displayName,
-        photoURL: `http://gravatar.com/avatar/${md5(user.email)}?d=identicon`
-      });
-      await createUserProfileDocument(user, { displayName });
-      //clear the form after submitting
-      this.setState({
-        displayName: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    this.props.signUpStartAsync(email, password, displayName);
+    this.setState({
+      displayName: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    });
   };
 
   handleChange = e => {
@@ -100,4 +85,12 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+  signUpStartAsync: (email, password, displayName) =>
+    dispatch(signUpStartAsync(email, password, displayName))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SignUp);

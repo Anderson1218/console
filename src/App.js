@@ -29,7 +29,6 @@ class App extends React.Component {
       console.log("auth changed!", userAuth);
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
-
         //to check if the database has updated at that ref
         //observable pattern
         userRef.onSnapshot(snapShot => {
@@ -39,6 +38,7 @@ class App extends React.Component {
           });
         });
       } else {
+        //Auth === null
         setCurrentUser(userAuth);
       }
     });
@@ -68,7 +68,13 @@ class App extends React.Component {
               this.props.currentUser ? <Redirect to="/" /> : <SignInPage />
             }
           />
-          <Route exact path="/signup" component={SignUpPage} />
+          <Route
+            exact
+            path="/signup"
+            render={() =>
+              this.props.currentUser ? <Redirect to="/" /> : <SignUpPage />
+            }
+          />
         </Switch>
       </Layout>
     );
