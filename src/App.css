@@ -10,6 +10,10 @@
 html,
 body {
   height: 100vh;
-  background: #eee;
+  background: linear-gradient(
+    45deg,
+    rgb(125, 126, 125) 0%,
+    rgb(14, 14, 14) 100%
+  );
   padding: 1em;
 }

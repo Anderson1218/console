@@ -10,7 +10,7 @@ class MessageHeader extends React.Component {
       searchLoading
     } = this.props;
     return (
-      <Segment clearing>
+      <Segment clearing style={{ background: "rgba(54,57,63,0.3)" }}>
         {/* Channel Title */}
         <Header fluid="true" as="h2" floated="left" style={{ marginBottom: 0 }}>
           <span>
@@ -23,6 +23,7 @@ class MessageHeader extends React.Component {
         {/* Channel Search Input */}
         <Header floated="right">
           <Input
+            transparent
             loading={searchLoading}
             onChange={handleSearchChange}
             size="mini"

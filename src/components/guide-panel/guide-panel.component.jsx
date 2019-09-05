@@ -16,8 +16,6 @@ class GuidePanel extends React.Component {
         <Divider />
         <Button as={Link} to="/" icon="home" size="small" color="blue" />
         <Divider />
-        <Button icon="add" size="small" color="blue" />
-        <Divider />
         <Button as={Link} to="/shop" icon="shop" size="small" color="blue" />
         <Divider />
         <Button

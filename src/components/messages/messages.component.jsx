@@ -18,6 +18,7 @@ class Messages extends React.Component {
     searchLoading: false,
     searchResults: []
   };
+  messagesEndRef = React.createRef();
 
   componentDidMount() {
     const { currentChannel, currentUser } = this.props;
@@ -31,7 +32,11 @@ class Messages extends React.Component {
       this.unsubscribeFromMessages();
       this.addListeners(this.props.currentChannel.id);
     }
+    this.scrollToBottom();
   }
+  scrollToBottom = () => {
+    this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   componentWillUnmount() {
     this.unsubscribeFromMessages();
@@ -128,11 +133,12 @@ class Messages extends React.Component {
           searchLoading={searchLoading}
         />
 
-        <Segment>
+        <Segment style={{ background: "rgba(54,57,63,0.3)" }}>
           <Comment.Group className="messages">
             {searchTerm
               ? this.renderMessages(searchResults)
               : this.renderMessages(messages)}
+            <div ref={this.messagesEndRef} />
           </Comment.Group>
         </Segment>
 

@@ -152,14 +152,18 @@ class MessageForm extends React.Component {
       percentUploaded
     } = this.state;
     return (
-      <Segment className="message__form">
+      <Segment
+        className="message__form"
+        style={{ background: "rgba(54,57,63,0.3)" }}
+      >
         <Input
+          transparent
           fluid
           name="message"
           onChange={this.handleChange}
           value={message}
           style={{ marginBottom: "0.7em" }}
-          label={<Button icon={"add"} />}
+          // label={<Button icon={"add"} />}
           labelPosition="left"
           className={
             errors.some(error => error.message.includes("message"))
@@ -170,17 +174,19 @@ class MessageForm extends React.Component {
         />
         <Button.Group icon widths="2">
           <Button
+            inverted
             onClick={this.sendMessage}
             disabled={loading}
-            color="orange"
+            // color="orange"
             content="Send Messages"
             labelPosition="left"
             icon="edit"
           />
           <Button
+            inverted
             onClick={this.openModal}
             disabled={uploadState === "uploading"}
-            color="teal"
+            // color="teal"
             content="Upload Media"
             labelPosition="right"
             icon="cloud upload"
