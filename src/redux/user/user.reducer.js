@@ -37,11 +37,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
       };
     case UserActionTypes.SIGN_UP_SUCCESS:
       return {
-        ...state
+        ...state,
+        error: null
       };
     case UserActionTypes.SIGN_IN_SUCCESS:
       return {
-        ...state
+        ...state,
+        error: null
       };
     case UserActionTypes.SIGN_OUT_SUCCESS:
       return {
@@ -56,7 +58,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: action.payload
       };
-
+    case UserActionTypes.CLEAR_ERROR_INFO:
+      return {
+        ...state,
+        error: null
+      };
     default:
       return state;
   }

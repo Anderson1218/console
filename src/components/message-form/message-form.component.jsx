@@ -163,8 +163,8 @@ class MessageForm extends React.Component {
           onChange={this.handleChange}
           value={message}
           style={{ marginBottom: "0.7em" }}
-          // label={<Button icon={"add"} />}
           labelPosition="left"
+          autoComplete="off"
           className={
             errors.some(error => error.message.includes("message"))
               ? "error"
@@ -177,7 +177,6 @@ class MessageForm extends React.Component {
             inverted
             onClick={this.sendMessage}
             disabled={loading}
-            // color="orange"
             content="Send Messages"
             labelPosition="left"
             icon="edit"
@@ -186,7 +185,6 @@ class MessageForm extends React.Component {
             inverted
             onClick={this.openModal}
             disabled={uploadState === "uploading"}
-            // color="teal"
             content="Upload Media"
             labelPosition="right"
             icon="cloud upload"

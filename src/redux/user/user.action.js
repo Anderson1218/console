@@ -11,6 +11,10 @@ export const setCurrentUser = user => ({
   payload: user
 });
 
+export const clearErrorInfo = () => ({
+  type: UserActionTypes.CLEAR_ERROR_INFO
+});
+
 export const signUpStart = () => ({
   type: UserActionTypes.SIGN_UP_START
 });

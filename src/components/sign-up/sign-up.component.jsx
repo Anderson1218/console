@@ -1,96 +1,172 @@
 import React from "react";
-import FormInput from "../form-input/form-input.component";
-import CustomButton from "../custom-button/custom-button.component";
-import { Link } from "react-router-dom";
-import "./sign-up.styles.scss";
-import { signUpStartAsync } from "../../redux/user/user.action";
+import { signUpStartAsync, clearErrorInfo } from "../../redux/user/user.action";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectUserError } from "../../redux/user/user.selectors";
+import { Grid, Form, Segment, Header, Message } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 class SignUp extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      displayName: "",
-      email: "",
-      password: "",
-      confirmPassword: ""
-    };
-  }
+  state = {
+    displayName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    errors: []
+  };
+
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
-    const { displayName, email, password, confirmPassword } = this.state;
-    if (password !== confirmPassword) {
-      alert("passwords don't match");
-      return;
+    const { displayName, email, password } = this.state;
+    if (this.isFormValid()) {
+      this.props.signUpStartAsync(email, password, displayName);
+    } else {
+      alert("front-end validation fail!");
     }
-    this.props.signUpStartAsync(email, password, displayName);
-    this.setState({
-      displayName: "",
-      email: "",
-      password: "",
-      confirmPassword: ""
-    });
   };
 
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+  isFormValid = () => {
+    let errors = [];
+    let error;
+    if (this.isFormEmpty(this.state)) {
+      error = { message: "Fill in all fields" };
+      this.setState({ errors: errors.concat(error) });
+      return false;
+    } else if (!this.isPasswordValid(this.state)) {
+      error = { message: "Password is invalid" };
+      this.setState({ errors: errors.concat(error) });
+      return false;
+    } else {
+      return true;
+    }
   };
+
+  isFormEmpty = ({ displayName, email, password, confirmPassword }) => {
+    return (
+      !displayName.length ||
+      !email.length ||
+      !password.length ||
+      !confirmPassword.length
+    );
+  };
+
+  isPasswordValid = ({ password, confirmPassword }) => {
+    if (password.length < 6 || confirmPassword.length < 6) {
+      return false;
+    } else if (password !== confirmPassword) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  // displayErrors = errors => {
+  //   return errors.map((error, i) => <p key={i}>{error.message}</p>);
+  // };
 
   render() {
     const { displayName, email, password, confirmPassword } = this.state;
+    const { error } = this.props;
     return (
-      <div className="sign-up">
-        <h2 className="title">I do not have a account</h2>
-        <span>Sign up with your email and password</span>
-        <form className="sign-up-form" onSubmit={this.handleSubmit}>
-          <FormInput
-            type="text"
-            name="displayName"
-            value={displayName}
-            onChange={this.handleChange}
-            label="Display Name"
-            required
-          />
-          <FormInput
-            type="email"
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-            label="Email"
-            required
-          />
-          <FormInput
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-            label="Password"
-            required
-          />
-          <FormInput
-            type="password"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={this.handleChange}
-            label="confirm Password"
-            required
-          />
-          <CustomButton type="submit">SIGN UP</CustomButton>
-          <Link to="/signin">go to sign in</Link>
-        </form>
-      </div>
+      <Grid
+        textAlign="center"
+        verticalAlign="middle"
+        style={{
+          width: "400px",
+          background: "rgba(54,57,63,1)",
+          borderRadius: "5px",
+          padding: "30px"
+        }}
+      >
+        <Grid.Row>
+          <Grid.Column>
+            <Header as="h2" icon inverted textAlign="center">
+              Register
+            </Header>
+            <Form onSubmit={this.handleSubmit} size="huge">
+              <Segment stacked inverted>
+                <Form.Field>
+                  <input
+                    style={{ background: "rgba(0,0,0,.1)", color: "white" }}
+                    name="displayName"
+                    placeholder="Display Name"
+                    onChange={this.handleChange}
+                    value={displayName}
+                    type="text"
+                    autoComplete="off"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <input
+                    style={{ background: "rgba(0,0,0,.1)", color: "white" }}
+                    name="email"
+                    placeholder="Email Address"
+                    onChange={this.handleChange}
+                    value={email}
+                    type="email"
+                    autoComplete="off"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <input
+                    style={{ background: "rgba(0,0,0,.1)", color: "white" }}
+                    name="password"
+                    placeholder="Password"
+                    onChange={this.handleChange}
+                    value={password}
+                    type="password"
+                    autoComplete="off"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <input
+                    style={{ background: "rgba(0,0,0,.1)", color: "white" }}
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    onChange={this.handleChange}
+                    value={confirmPassword}
+                    type="password"
+                    autoComplete="off"
+                  />
+                </Form.Field>
+                <Form.Button primary fluid size="small" type="submit">
+                  Register
+                </Form.Button>
+              </Segment>
+            </Form>
+            {error && (
+              <Message color="black">
+                <h3>Error</h3>
+                {error.message}
+              </Message>
+            )}
+            <Message color="black">
+              Already have an account?{" "}
+              <Link to="/signin" onClick={this.props.clearErrorInfo}>
+                Login
+              </Link>
+            </Message>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  error: selectUserError
+});
+
 const mapDispatchToProps = dispatch => ({
   signUpStartAsync: (email, password, displayName) =>
-    dispatch(signUpStartAsync(email, password, displayName))
+    dispatch(signUpStartAsync(email, password, displayName)),
+  clearErrorInfo: () => dispatch(clearErrorInfo())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SignUp);
