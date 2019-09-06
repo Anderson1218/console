@@ -29,7 +29,8 @@ const CollectionItem = ({ item, addItem }) => {
       style={{
         backgroundColor: "rgba(0, 0, 0, 0.3)",
         boxShadow: "none",
-        height: "95%"
+        height: "95%",
+        margin: "5px"
       }}
     >
       <Image src={imageUrl} wrapped ui={false} />

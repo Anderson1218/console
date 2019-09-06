@@ -17,6 +17,10 @@
       text-transform: capitalize;
       width: 23%;
 
+      span {
+        font-size: 2em;
+      }
+
       &:last-child {
         width: 8%;
       }
