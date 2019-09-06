@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/storage";
+import "firebase/database";
 
 const config = {
   apiKey: "AIzaSyA5IQkLsRAa4Ur_ToFPxoaa5hj0oPGthd0",
@@ -64,6 +65,7 @@ export const convertCollectionsSnapshotToMap = collections => {
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+export const realTimeDb = firebase.database();
 export const storage = firebase.storage();
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 export default firebase;

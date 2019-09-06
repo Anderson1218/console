@@ -32,7 +32,9 @@ class Messages extends React.Component {
       this.unsubscribeFromMessages();
       this.addListeners(this.props.currentChannel.id);
     }
-    this.scrollToBottom();
+    if (this.messagesEndRef) {
+      this.scrollToBottom();
+    }
   }
   scrollToBottom = () => {
     this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });

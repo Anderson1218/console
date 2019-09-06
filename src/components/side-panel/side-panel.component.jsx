@@ -5,6 +5,7 @@ import Channels from "../channels/channels.component";
 import { Route } from "react-router-dom";
 import CartPanel from "../cart-panel/cart-panel.component";
 import CheckoutPanel from "../checkout-panel/checkout-panel.component";
+// import DirectMessages from "../direct-messages/direct-messages.component";
 
 const SidePanel = () => {
   return (
@@ -18,6 +19,7 @@ const SidePanel = () => {
     >
       <UserPanel />
       <Route exact path="/" component={Channels} />
+      {/* <Route exact path="/" component={DirectMessages} /> */}
       <Route path="/shop" component={CartPanel} />
       <Route exact path="/checkout" component={CheckoutPanel} />
     </Menu>

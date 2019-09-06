@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Container } from "semantic-ui-react";
 import GuidePanel from "../guide-panel/guide-panel.component";
 import SidePanel from "../side-panel/side-panel.component";
 import Particles from "react-particles-js";
@@ -19,7 +19,7 @@ const particlesOptions = {
 
 const Layout = props => {
   return (
-    <>
+    <Container fluid>
       <Grid
         columns="equal"
         style={{
@@ -31,7 +31,7 @@ const Layout = props => {
         {props.currentUser && <SidePanel />}
         {props.children}
       </Grid>
-    </>
+    </Container>
   );
 };
 
