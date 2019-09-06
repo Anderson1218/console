@@ -15,7 +15,7 @@ class ShopPage extends React.Component {
   render() {
     const { match } = this.props;
     return (
-      <Grid.Column style={{ marginLeft: 320 }}>
+      <Grid.Column width={12} style={{ marginLeft: 320 }}>
         <Route
           exact
           path={`${match.path}`}

@@ -23,7 +23,8 @@ const Layout = props => {
       <Grid
         columns="equal"
         style={{
-          height: "100vh"
+          height: "100vh",
+          overflow: "scroll"
         }}
       >
         <Particles className="particles" params={particlesOptions} />

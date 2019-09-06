@@ -16,7 +16,7 @@ const Chat = props => {
   //currentChannel is null in first render
   return (
     <>
-      <Grid.Column style={{ marginLeft: 320 }}>
+      <Grid.Column width={6} style={{ marginLeft: 320 }}>
         {props.currentChannel && (
           <Messages
             currentUser={props.currentUser}
