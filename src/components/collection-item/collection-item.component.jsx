@@ -40,7 +40,7 @@ const CollectionItem = ({ item, addItem }) => {
           <span>{`$ ${price}`}</span>
         </Card.Description>
       </Card.Content>
-      <Card.Content extra>
+      <Card.Content>
         <Button icon="plus" color="facebook" onClick={() => addItem(item)} />
       </Card.Content>
     </Card>

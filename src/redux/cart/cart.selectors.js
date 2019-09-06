@@ -22,6 +22,10 @@ export const selectCartItemsCount = createSelector(
       0
     )
 );
+export const selectCartItemsCategoryCount = createSelector(
+  [selectCartItems],
+  cartItems => cartItems.length
+);
 
 export const selectCartTotal = createSelector(
   [selectCartItems],
