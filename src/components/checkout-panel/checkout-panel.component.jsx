@@ -9,12 +9,12 @@ const CheckoutPanel = ({ total }) => {
   return (
     <Menu.Menu style={{ paddingBottom: "2em" }}>
       <Menu.Item>
-        <StripeCheckoutButton price={total} />
-      </Menu.Item>
-      <Menu.Item>
         <div
           style={{ color: "white", fontSize: "large" }}
         >{`Total: $${total}`}</div>
+      </Menu.Item>
+      <Menu.Item>
+        <StripeCheckoutButton price={total} />
       </Menu.Item>
     </Menu.Menu>
   );
