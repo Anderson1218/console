@@ -10,10 +10,10 @@ import { Route } from "react-router-dom";
 import { signOutStartAsync } from "../../redux/user/user.action";
 
 const dropdownOptions = signOutStartAsync => [
-  {
-    key: "avatar",
-    text: <span>Change Avatar</span>
-  },
+  // {
+  //   key: "avatar",
+  //   text: <span>Change Avatar</span>
+  // },
   {
     key: "signout",
     text: <span onClick={signOutStartAsync}>Sign Out</span>

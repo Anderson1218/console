@@ -9,7 +9,7 @@ const StripeCheckoutButton = ({ price, clearAllItemsFromCart }) => {
   const publishableKey = "pk_test_XVXMKAffgMXfx8XPTHK4EfeD00hfUqDTDH";
   const onToken = token => {
     //make API call to Backend
-    console.log(token);
+    // console.log(token);
     clearAllItemsFromCart();
     alert("Payment Successful");
   };
@@ -22,7 +22,7 @@ const StripeCheckoutButton = ({ price, clearAllItemsFromCart }) => {
       image=""
       description={`Total $${price}`}
       amount={priceForStripe}
-      panelLabel="Give Money"
+      panelLabel="Pay"
       token={onToken}
       stripeKey={publishableKey}
     />
