@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "semantic-ui-react";
+import { Menu, Header } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import StripeCheckoutButton from "../../components/stripe-button/stripe-button.component";
@@ -15,6 +15,12 @@ const CheckoutPanel = ({ total }) => {
       </Menu.Item>
       <Menu.Item>
         <StripeCheckoutButton price={total} />
+      </Menu.Item>
+      <Menu.Item>
+        <Header color="red">Card number for testing</Header>
+        <li>4242 4242 4242 4242</li>
+        <li>Exp:01/20</li>
+        <li>CVV:123</li>
       </Menu.Item>
     </Menu.Menu>
   );
