@@ -117,7 +117,7 @@ class Channels extends React.Component {
         <Menu.Menu style={{ paddingBottom: "2em" }}>
           <Menu.Item>
             <span>
-              <Icon name="exchange" /> CHANNELS
+              <Icon name="group" /> ROOMS
             </span>{" "}
             ({channels.length}){" "}
             <Icon link name="add" onClick={this.openModal} />
