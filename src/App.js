@@ -10,6 +10,7 @@ import ShopPage from "./pages/shop/shop.component";
 import CheckoutPage from "./pages/checkout/checkout.component";
 import SignInPage from "./pages/signin/sign-in-page.component";
 import SignUpPage from "./pages/signup/sign-up-page.component";
+import NotFoundPage from "./pages/not-found-page/not-found-page.component";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
@@ -85,6 +86,7 @@ class App extends React.Component {
             path="/signup"
             render={() => (currentUser ? <Redirect to="/" /> : <SignUpPage />)}
           />
+          <Route component={NotFoundPage} />
         </Switch>
       </Layout>
     );

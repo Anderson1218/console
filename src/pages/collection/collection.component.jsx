@@ -36,6 +36,9 @@ class CollectionPage extends React.Component {
   };
 
   render() {
+    if (!this.props.collection) {
+      return <h1>Product does not exist</h1>;
+    }
     const { title } = this.props.collection;
     const { currentPage } = this.state;
     const truncatedCollectionItems = this.getTruncatedCollectionItems();
