@@ -11,6 +11,20 @@ export const setCurrentUser = user => ({
   payload: user
 });
 
+export const getCurrentLocationSuccess = location => ({
+  type: UserActionTypes.GET_CURRENT_LOCATION_SUCCESS,
+  payload: location
+});
+
+export const getCurrentLocationStart = () => ({
+  type: UserActionTypes.GET_CURRENT_LOCATION_START
+});
+
+export const getCurrentLocationFail = error => ({
+  type: UserActionTypes.GET_CURRENT_LOCATION_FAIL,
+  payload: error
+});
+
 export const clearErrorInfo = () => ({
   type: UserActionTypes.CLEAR_ERROR_INFO
 });
@@ -116,5 +130,24 @@ export const signOutStartAsync = () => {
       .catch(error => {
         dispatch(signOutFailure(error));
       });
+  };
+};
+
+export const getCurrentLocationStartAsync = () => {
+  return dispatch => {
+    dispatch(getCurrentLocationStart());
+    navigator.geolocation.getCurrentPosition(
+      location => {
+        let center = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude
+        };
+        dispatch(getCurrentLocationSuccess(center));
+      },
+      error => {
+        dispatch(getCurrentLocationFail(error));
+        console.log(error);
+      }
+    );
   };
 };

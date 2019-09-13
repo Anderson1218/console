@@ -7,6 +7,11 @@ export const selectCurrentUser = createSelector(
   user => user.currentUser
 );
 
+export const selectCurrentLocation = createSelector(
+  [selectUser],
+  user => user.currentLocation
+);
+
 export const selectUserError = createSelector(
   [selectUser],
   user => user.error
@@ -25,4 +30,10 @@ export const selectDisplayName = createSelector(
 export const selectPhotoURL = createSelector(
   [selectCurrentUser],
   currentUser => currentUser.photoURL
+);
+
+export const selectIsLocationLoading = createSelector(
+  [selectCurrentLocation],
+  currentLocation =>
+    !(!!currentLocation.latitude && !!currentLocation.longitude)
 );

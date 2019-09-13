@@ -2,8 +2,13 @@ import UserActionTypes from "./user.types";
 
 const INITIAL_STATE = {
   currentUser: null,
+  currentLocation: {
+    latitude: null,
+    longitude: null
+  },
   isLoading: true,
-  error: null
+  error: null,
+  locationError: null
 };
 
 //every single reducer gets every single action got fire
@@ -14,6 +19,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         currentUser: action.payload
+      };
+    case UserActionTypes.GET_CURRENT_LOCATION_SUCCESS:
+      return {
+        ...state,
+        currentLocation: action.payload
+      };
+    case UserActionTypes.GET_CURRENT_LOCATION_FAIL:
+      return {
+        ...state,
+        locationError: action.payload
       };
     case UserActionTypes.SIGN_UP_START:
       return {

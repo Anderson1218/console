@@ -25,6 +25,8 @@ class GuidePanel extends React.Component {
           size="small"
           color="blue"
         />
+        <Divider />
+        <Button as={Link} to="/map" icon="map" size="small" color="blue" />
       </Sidebar>
     );
   }

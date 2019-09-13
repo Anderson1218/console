@@ -10,11 +10,15 @@ import ShopPage from "./pages/shop/shop.component";
 import CheckoutPage from "./pages/checkout/checkout.component";
 import SignInPage from "./pages/signin/sign-in-page.component";
 import SignUpPage from "./pages/signup/sign-up-page.component";
+import GoogleMapPageContainer from "./pages/google-map-page/google-map-page.container";
 import NotFoundPage from "./pages/not-found-page/not-found-page.component";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
-import { setCurrentUser } from "./redux/user/user.action";
+import {
+  setCurrentUser,
+  getCurrentLocationStartAsync
+} from "./redux/user/user.action";
 import { createStructuredSelector } from "reselect";
 import {
   selectCurrentUser,
@@ -25,7 +29,7 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser, getCurrentLocationStartAsync } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       console.log("auth changed!", userAuth);
       if (userAuth) {
@@ -37,6 +41,7 @@ class App extends React.Component {
             id: snapShot.id,
             ...snapShot.data()
           });
+          getCurrentLocationStartAsync();
         });
       } else {
         //Auth === null
@@ -76,6 +81,12 @@ class App extends React.Component {
             isAuthenticated={currentUser}
             component={CheckoutPage}
           />
+          <PrivateRoute
+            exact
+            path="/map"
+            isAuthenticated={currentUser}
+            component={GoogleMapPageContainer}
+          />
           <Route
             exact
             path="/signin"
@@ -98,7 +109,8 @@ const mapStateToProps = createStructuredSelector({
   isLoading: selectUserIsLoading
 });
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  getCurrentLocationStartAsync: () => dispatch(getCurrentLocationStartAsync())
 });
 
 export default connect(

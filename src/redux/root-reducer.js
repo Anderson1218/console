@@ -6,6 +6,7 @@ import cartReducer from "./cart/cart.reducer";
 // import directoryReducer from "./directory/directory.reducer";
 import shopReducer from "./shop/shop.reducer";
 import channelReducer from "./channel/channel.reducer";
+import geoInfoReducer from "./geoInfo/geoInfo.reducer";
 
 const persistConfig = {
   key: "root",
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   // directory: directoryReducer,
   shop: shopReducer,
-  channel: channelReducer
+  channel: channelReducer,
+  geoInfo: geoInfoReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);
