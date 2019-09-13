@@ -78,7 +78,6 @@ class GoogleMapPage extends Component {
             language: "zh-TW",
             region: "zh-TW"
           }}
-          // defaultCenter={[currentLocation.latitude, currentLocation.latitude]}
           defaultZoom={15}
           center={[latitude, longitude]}
           yesIWantToUseGoogleMapApiInternals

@@ -20,6 +20,16 @@ const geoInfoReducer = (state = INITIAL_STATE, action) => {
         ...state,
         center: action.payload
       };
+    case GeoInfoActionTypes.SORT_RESTAURANTS_BY_RATING:
+      return {
+        ...state,
+        restaurants: action.payload
+      };
+    case GeoInfoActionTypes.SORT_RESTAURANTS_BY_DISTANCE:
+      return {
+        ...state,
+        restaurants: action.payload
+      };
     default:
       return state;
   }
