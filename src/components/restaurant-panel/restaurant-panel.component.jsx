@@ -3,9 +3,20 @@ import { Menu, Header, Popup, Dropdown } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { selectRestaurants } from "../../redux/geoInfo/geoinfo.selectors";
 import { createStructuredSelector } from "reselect";
-import { sortRestaurantsByRating } from "../../redux/geoInfo/geoInfo.action";
+import {
+  sortRestaurantsByRating,
+  sortRestaurantsByDistance,
+  setCenterOfMap,
+  toggleRestaurantInfoWindow
+} from "../../redux/geoInfo/geoInfo.action";
 
-const RestaurantPanel = ({ restaurants = [], sortRestaurantsByRating }) => {
+const RestaurantPanel = ({
+  restaurants = [],
+  sortRestaurantsByRating,
+  sortRestaurantsByDistance,
+  setCenterOfMap,
+  toggleRestaurantInfoWindow
+}) => {
   return (
     <Menu.Menu style={{ paddingBottom: "2em" }}>
       <Menu.Item>
@@ -22,15 +33,29 @@ const RestaurantPanel = ({ restaurants = [], sortRestaurantsByRating }) => {
             <Dropdown.Item onClick={() => sortRestaurantsByRating(restaurants)}>
               sort by rating
             </Dropdown.Item>
-            <Dropdown.Item>sort by distance</Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => sortRestaurantsByDistance(restaurants)}
+            >
+              sort by distance
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Item>
       {restaurants.length > 0 &&
-        restaurants.map(restaurant => (
+        restaurants.map((restaurant, index) => (
           <Popup
             key={restaurant.id}
-            trigger={<Menu.Item name={restaurant.name}></Menu.Item>}
+            trigger={
+              <Menu.Item
+                onClick={() => {
+                  setCenterOfMap({
+                    latitude: restaurant.geometry.location.lat(),
+                    longitude: restaurant.geometry.location.lng()
+                  });
+                  toggleRestaurantInfoWindow(restaurant.id);
+                }}
+              >{`${index + 1}. ${restaurant.name}`}</Menu.Item>
+            }
             position="right center"
             basic
           >
@@ -49,7 +74,12 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   sortRestaurantsByRating: restaurants =>
-    dispatch(sortRestaurantsByRating(restaurants))
+    dispatch(sortRestaurantsByRating(restaurants)),
+  sortRestaurantsByDistance: restaurants =>
+    dispatch(sortRestaurantsByDistance(restaurants)),
+  setCenterOfMap: center => dispatch(setCenterOfMap(center)),
+  toggleRestaurantInfoWindow: restaurantId =>
+    dispatch(toggleRestaurantInfoWindow(restaurantId))
 });
 
 export default connect(

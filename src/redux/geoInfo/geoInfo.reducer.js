@@ -5,7 +5,11 @@ const INITIAL_STATE = {
     latitude: null,
     longitude: null
   },
-  restaurants: []
+  restaurants: [],
+  infoWindow: {
+    restaurantId: null,
+    isOpen: false
+  }
 };
 
 const geoInfoReducer = (state = INITIAL_STATE, action) => {
@@ -13,7 +17,11 @@ const geoInfoReducer = (state = INITIAL_STATE, action) => {
     case GeoInfoActionTypes.SET_NEARBY_RESTAURANTS:
       return {
         ...state,
-        restaurants: action.payload
+        restaurants: action.payload,
+        infoWindow: {
+          restaurantId: null,
+          isOpen: false
+        }
       };
     case GeoInfoActionTypes.SET_CENTER_OF_MAP:
       return {
@@ -29,6 +37,23 @@ const geoInfoReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         restaurants: action.payload
+      };
+    case GeoInfoActionTypes.TOGGLE_RESTAURANT_INFOWINDOW:
+      if (state.infoWindow.restaurantId === action.payload) {
+        return {
+          ...state,
+          infoWindow: {
+            ...state.infoWindow,
+            isOpen: !state.infoWindow.isOpen
+          }
+        };
+      }
+      return {
+        ...state,
+        infoWindow: {
+          restaurantId: action.payload,
+          isOpen: true
+        }
       };
     default:
       return state;

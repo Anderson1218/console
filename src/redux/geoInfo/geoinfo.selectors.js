@@ -11,3 +11,8 @@ export const selectCenterOfMap = createSelector(
   [selectGeoInfo],
   geoInfo => geoInfo.center
 );
+
+export const selectInfoWindow = createSelector(
+  [selectGeoInfo],
+  geoInfo => geoInfo.infoWindow
+);
