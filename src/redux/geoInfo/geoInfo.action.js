@@ -12,27 +12,15 @@ export const setNearbyRestaurants = restaurants => {
   };
 };
 
-//to be refactor
-export const sortRestaurantsByRating = restaurants => {
-  const sortedRestaurants = [...restaurants].sort((a, b) => {
-    return a.rating - b.rating;
-  });
-
+export const sortRestaurantsByRating = () => {
   return {
-    type: GeoInfoActionTypes.SORT_RESTAURANTS_BY_RATING,
-    payload: sortedRestaurants
+    type: GeoInfoActionTypes.SORT_RESTAURANTS_BY_RATING
   };
 };
 
-//to be refactor
-export const sortRestaurantsByDistance = restaurants => {
-  const sortedRestaurants = [...restaurants].sort((a, b) => {
-    return a.distanceDegree - b.distanceDegree;
-  });
-
+export const sortRestaurantsByDistance = () => {
   return {
-    type: GeoInfoActionTypes.SORT_RESTAURANTS_BY_DISTANCE,
-    payload: sortedRestaurants
+    type: GeoInfoActionTypes.SORT_RESTAURANTS_BY_DISTANCE
   };
 };
 

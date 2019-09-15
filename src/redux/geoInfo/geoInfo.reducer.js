@@ -29,14 +29,24 @@ const geoInfoReducer = (state = INITIAL_STATE, action) => {
         center: action.payload
       };
     case GeoInfoActionTypes.SORT_RESTAURANTS_BY_RATING:
+      const restaurantsSortedByRating = state.restaurants
+        .slice()
+        .sort((a, b) => {
+          return a.rating - b.rating;
+        });
       return {
         ...state,
-        restaurants: action.payload
+        restaurants: restaurantsSortedByRating
       };
     case GeoInfoActionTypes.SORT_RESTAURANTS_BY_DISTANCE:
+      const restaurantsSortedByDistance = state.restaurants
+        .slice()
+        .sort((a, b) => {
+          return a.distanceDegree - b.distanceDegree;
+        });
       return {
         ...state,
-        restaurants: action.payload
+        restaurants: restaurantsSortedByDistance
       };
     case GeoInfoActionTypes.TOGGLE_RESTAURANT_INFOWINDOW:
       if (state.infoWindow.restaurantId === action.payload) {

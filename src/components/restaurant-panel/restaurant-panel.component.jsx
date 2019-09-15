@@ -34,12 +34,10 @@ const RestaurantPanel = ({
           inverted
         >
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => sortRestaurantsByRating(restaurants)}>
+            <Dropdown.Item onClick={sortRestaurantsByRating}>
               sort by rating
             </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => sortRestaurantsByDistance(restaurants)}
-            >
+            <Dropdown.Item onClick={sortRestaurantsByDistance}>
               sort by distance
             </Dropdown.Item>
           </Dropdown.Menu>
