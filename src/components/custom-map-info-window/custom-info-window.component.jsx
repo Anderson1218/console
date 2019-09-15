@@ -1,20 +1,9 @@
 import React from "react";
+import "./custom-info-window.styles.scss";
 const CustomInfoWindow = props => {
   const { place } = props;
-  const infoWindowStyle = {
-    position: "relative",
-    bottom: 150,
-    left: "-45px",
-    width: 220,
-    backgroundColor: "white",
-    boxShadow: "0 2px 7px 1px rgba(0, 0, 0, 0.3)",
-    padding: 10,
-    fontSize: 14,
-    zIndex: 100
-  };
-
   return (
-    <div style={infoWindowStyle}>
+    <div className="custom-info-window">
       <div style={{ fontSize: 16 }}>{place.name}</div>
       <div style={{ fontSize: 14 }}>
         <span style={{ color: "grey" }}>{place.rating} </span>

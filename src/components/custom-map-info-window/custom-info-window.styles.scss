@@ -1,0 +1,26 @@
+.custom-info-window {
+  position: absolute;
+  top: 30px;
+  width: 220px;
+  background-color: white;
+  box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  font-size: 14px;
+  z-index: 100;
+}
+
+.custom-info-window::after {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  top: 0px;
+  transform: translate(-50%, -50%) rotate(135deg);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0) 51%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  box-shadow: -2px 2px 2px 0 rgba(178, 178, 178, 0.4);
+}

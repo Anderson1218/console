@@ -11,14 +11,17 @@ import {
   selectCenterOfMap,
   selectInfoWindow
 } from "../../redux/geoInfo/geoinfo.selectors";
-import { selectCurrentLocation } from "../../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
 import CustomMapMarker from "../../components/custom-map-marker/custom-map-marker.component";
 
 class GoogleMapPage extends Component {
   state = {
     map: null,
-    maps: null
+    maps: null,
+    searchPoint: {
+      latitude: this.props.currentLocation.latitude,
+      longitude: this.props.currentLocation.longitude
+    }
   };
 
   componentDidMount() {
@@ -26,6 +29,7 @@ class GoogleMapPage extends Component {
     setCenterOfMap(currentLocation);
   }
 
+  //only being called once
   handleApiLoaded = (map, maps) => {
     const {
       center: { latitude, longitude }
@@ -41,7 +45,7 @@ class GoogleMapPage extends Component {
     if (map && maps) {
       let placesService = new maps.places.PlacesService(map);
       let location = new maps.LatLng(latitude, longitude);
-      var request = {
+      let request = {
         location: location,
         rankBy: maps.places.RankBy.DISTANCE,
         type: ["restaurant"]
@@ -54,11 +58,6 @@ class GoogleMapPage extends Component {
     }
   };
 
-  getRestaurantLocation = restaurant => ({
-    lat: restaurant.geometry.location.lat(),
-    lng: restaurant.geometry.location.lng()
-  });
-
   handleClick = data => {
     const { setCenterOfMap } = this.props;
     setCenterOfMap({
@@ -66,6 +65,12 @@ class GoogleMapPage extends Component {
       longitude: data.lng
     });
     this.searchNearbyRestaurants(data.lat, data.lng);
+    this.setState({
+      searchPoint: {
+        latitude: data.lat,
+        longitude: data.lng
+      }
+    });
   };
 
   handleChildClick = (child, childProps) => {
@@ -81,6 +86,8 @@ class GoogleMapPage extends Component {
       center: { latitude, longitude },
       infoWindow
     } = this.props;
+    const { searchPoint } = this.state;
+    console.log("render", this.props.center);
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%" }}>
@@ -90,34 +97,34 @@ class GoogleMapPage extends Component {
             language: "zh-TW",
             region: "zh-TW"
           }}
-          defaultZoom={17}
+          defaultZoom={18}
           center={[latitude, longitude]}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
           onClick={this.handleClick}
           onChildClick={this.handleChildClick}
         >
-          <CustomMapMarker
-            imageURL="https://cdn4.vectorstock.com/i/1000x1000/33/63/man-icon-male-symbol-glyph-pictogram-vector-20293363.jpg"
-            lat={latitude}
-            lng={longitude}
-          />
           {restaurants &&
             restaurants.map(restaurant => {
-              let location = this.getRestaurantLocation(restaurant);
-              let show =
-                infoWindow.restaurantId === restaurant.id && infoWindow.isOpen;
               return (
                 <CustomMapMarker
-                  imageURL="https://rfclipart.com/image/big/e2-3e-5b/restaurant-icon-fork-and-spoon-Download-Royalty-free-Vector-File-EPS-142041.jpg"
+                  imageURL="https://www.trzcacak.rs/myfile/full/19-199239_kitchen-icon-emblem.png"
                   key={restaurant.id}
-                  lat={location.lat}
-                  lng={location.lng}
-                  show={show}
+                  lat={restaurant.geometry.location.lat()}
+                  lng={restaurant.geometry.location.lng()}
+                  show={
+                    infoWindow.restaurantId === restaurant.id &&
+                    infoWindow.isOpen
+                  }
                   place={restaurant}
                 />
               );
             })}
+          <CustomMapMarker
+            imageURL="https://cdn3.iconfinder.com/data/icons/monsters-3/66/11-512.png"
+            lat={searchPoint.latitude}
+            lng={searchPoint.longitude}
+          />
         </GoogleMapReact>
       </div>
     );
@@ -126,7 +133,6 @@ class GoogleMapPage extends Component {
 
 const mapStateToProps = createStructuredSelector({
   restaurants: selectRestaurants,
-  currentLocation: selectCurrentLocation,
   center: selectCenterOfMap,
   infoWindow: selectInfoWindow
 });

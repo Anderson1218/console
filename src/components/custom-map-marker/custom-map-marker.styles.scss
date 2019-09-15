@@ -1,0 +1,11 @@
+.marker-container {
+  position: relative;
+}
+
+.custom-marker {
+  border-radius: 50%;
+  height: 30px;
+  width: 25px;
+  cursor: pointer;
+  z-index: 10;
+}
