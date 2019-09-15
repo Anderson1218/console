@@ -1,7 +1,10 @@
 import React from "react";
 import { Menu, Header, Popup, Dropdown } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { selectRestaurants } from "../../redux/geoInfo/geoinfo.selectors";
+import {
+  selectRestaurants,
+  selectInfoWindow
+} from "../../redux/geoInfo/geoinfo.selectors";
 import { createStructuredSelector } from "reselect";
 import {
   sortRestaurantsByRating,
@@ -15,7 +18,8 @@ const RestaurantPanel = ({
   sortRestaurantsByRating,
   sortRestaurantsByDistance,
   setCenterOfMap,
-  toggleRestaurantInfoWindow
+  toggleRestaurantInfoWindow,
+  infoWindow
 }) => {
   return (
     <Menu.Menu style={{ paddingBottom: "2em" }}>
@@ -54,14 +58,15 @@ const RestaurantPanel = ({
                   });
                   toggleRestaurantInfoWindow(restaurant.id);
                 }}
+                active={
+                  infoWindow.restaurantId === restaurant.id && infoWindow.isOpen
+                }
               >{`${index + 1}. ${restaurant.name}`}</Menu.Item>
             }
             position="right center"
             basic
           >
-            <Popup.Header>{restaurant.name}</Popup.Header>
-            <Popup.Content>{`Rating: ${restaurant.rating}`}</Popup.Content>
-            <Popup.Content>{`Address: ${restaurant.vicinity}`}</Popup.Content>
+            <Popup.Header>超好吃!!</Popup.Header>
           </Popup>
         ))}
     </Menu.Menu>
@@ -69,7 +74,8 @@ const RestaurantPanel = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  restaurants: selectRestaurants
+  restaurants: selectRestaurants,
+  infoWindow: selectInfoWindow
 });
 
 const mapDispatchToProps = dispatch => ({

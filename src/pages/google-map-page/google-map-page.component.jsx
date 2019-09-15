@@ -79,7 +79,6 @@ class GoogleMapPage extends Component {
     const {
       restaurants,
       center: { latitude, longitude },
-      currentLocation,
       infoWindow
     } = this.props;
     return (
@@ -100,11 +99,6 @@ class GoogleMapPage extends Component {
         >
           <CustomMapMarker
             imageURL="https://cdn4.vectorstock.com/i/1000x1000/33/63/man-icon-male-symbol-glyph-pictogram-vector-20293363.jpg"
-            lat={currentLocation.latitude}
-            lng={currentLocation.longitude}
-          />
-          <CustomMapMarker
-            imageURL="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_El-oPJSohSlzqa5E27l67gatHiYfSjHS6_B3ZzBBK1rpAPEM"
             lat={latitude}
             lng={longitude}
           />
