@@ -50,10 +50,10 @@ const RestaurantPanel = ({
             trigger={
               <Menu.Item
                 onClick={() => {
-                  setCenterOfMap({
-                    latitude: restaurant.geometry.location.lat(),
-                    longitude: restaurant.geometry.location.lng()
-                  });
+                  setCenterOfMap(
+                    restaurant.geometry.location.lat(),
+                    restaurant.geometry.location.lng()
+                  );
                   toggleRestaurantInfoWindow(restaurant.id);
                 }}
                 active={
@@ -63,8 +63,12 @@ const RestaurantPanel = ({
             }
             position="right center"
             basic
+            inverted
           >
-            <Popup.Header>超好吃!!</Popup.Header>
+            <Popup.Header>
+              Click the name of restaurant or marker on the map to see more
+              information
+            </Popup.Header>
           </Popup>
         ))}
     </Menu.Menu>
@@ -81,7 +85,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(sortRestaurantsByRating(restaurants)),
   sortRestaurantsByDistance: restaurants =>
     dispatch(sortRestaurantsByDistance(restaurants)),
-  setCenterOfMap: center => dispatch(setCenterOfMap(center)),
+  setCenterOfMap: (latitude, longitude) =>
+    dispatch(setCenterOfMap(latitude, longitude)),
   toggleRestaurantInfoWindow: restaurantId =>
     dispatch(toggleRestaurantInfoWindow(restaurantId))
 });

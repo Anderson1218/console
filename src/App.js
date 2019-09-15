@@ -31,7 +31,6 @@ class App extends React.Component {
   componentDidMount() {
     const { setCurrentUser, getCurrentLocationStartAsync } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      console.log("auth changed!", userAuth);
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         //to check if the database has updated at that ref

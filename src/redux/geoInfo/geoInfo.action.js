@@ -24,9 +24,12 @@ export const sortRestaurantsByDistance = () => {
   };
 };
 
-export const setCenterOfMap = center => ({
+export const setCenterOfMap = (latitude, longitude) => ({
   type: GeoInfoActionTypes.SET_CENTER_OF_MAP,
-  payload: center
+  payload: {
+    latitude,
+    longitude
+  }
 });
 
 export const toggleRestaurantInfoWindow = restaurantId => ({

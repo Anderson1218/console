@@ -26,7 +26,10 @@ const geoInfoReducer = (state = INITIAL_STATE, action) => {
     case GeoInfoActionTypes.SET_CENTER_OF_MAP:
       return {
         ...state,
-        center: action.payload
+        center: {
+          latitude: action.payload.latitude,
+          longitude: action.payload.longitude
+        }
       };
     case GeoInfoActionTypes.SORT_RESTAURANTS_BY_RATING:
       const restaurantsSortedByRating = state.restaurants

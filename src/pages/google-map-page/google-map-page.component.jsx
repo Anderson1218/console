@@ -26,7 +26,7 @@ class GoogleMapPage extends Component {
 
   componentDidMount() {
     const { currentLocation, setCenterOfMap } = this.props;
-    setCenterOfMap(currentLocation);
+    setCenterOfMap(currentLocation.latitude, currentLocation.longitude);
   }
 
   //only being called once
@@ -60,10 +60,7 @@ class GoogleMapPage extends Component {
 
   handleClick = data => {
     const { setCenterOfMap } = this.props;
-    setCenterOfMap({
-      latitude: data.lat,
-      longitude: data.lng
-    });
+    setCenterOfMap(data.lat, data.lng);
     this.searchNearbyRestaurants(data.lat, data.lng);
     this.setState({
       searchPoint: {
@@ -87,7 +84,6 @@ class GoogleMapPage extends Component {
       infoWindow
     } = this.props;
     const { searchPoint } = this.state;
-    console.log("render", this.props.center);
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: "100vh", width: "100%" }}>
@@ -140,7 +136,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   setNearbyRestaurants: restaurants =>
     dispatch(setNearbyRestaurants(restaurants)),
-  setCenterOfMap: center => dispatch(setCenterOfMap(center)),
+  setCenterOfMap: (latitude, longitude) =>
+    dispatch(setCenterOfMap(latitude, longitude)),
   toggleRestaurantInfoWindow: restaurantId =>
     dispatch(toggleRestaurantInfoWindow(restaurantId))
 });
