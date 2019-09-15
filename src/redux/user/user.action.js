@@ -136,18 +136,29 @@ export const signOutStartAsync = () => {
 export const getCurrentLocationStartAsync = () => {
   return dispatch => {
     dispatch(getCurrentLocationStart());
-    navigator.geolocation.getCurrentPosition(
-      location => {
-        let center = {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude
-        };
-        dispatch(getCurrentLocationSuccess(center));
-      },
-      error => {
-        dispatch(getCurrentLocationFail(error));
-        console.log(error);
-      }
-    );
+    if (navigator.geolocation) {
+      let options = {
+        enableHighAccuracy: false,
+        timeout: 8000,
+        maximumAge: 5 * 60 * 1000
+      };
+      navigator.geolocation.getCurrentPosition(
+        location => {
+          let center = {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude
+          };
+          dispatch(getCurrentLocationSuccess(center));
+        },
+        error => {
+          dispatch(getCurrentLocationFail(error));
+        },
+        options
+      );
+    } else {
+      let error =
+        "Geolocation is not supported for this Browser/OS version yet";
+      dispatch(getCurrentLocationFail(error));
+    }
   };
 };

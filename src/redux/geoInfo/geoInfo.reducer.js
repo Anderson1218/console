@@ -35,7 +35,7 @@ const geoInfoReducer = (state = INITIAL_STATE, action) => {
       const restaurantsSortedByRating = state.restaurants
         .slice()
         .sort((a, b) => {
-          return a.rating - b.rating;
+          return b.rating - a.rating;
         });
       return {
         ...state,
