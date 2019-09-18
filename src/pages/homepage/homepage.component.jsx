@@ -1,6 +1,6 @@
 import React from "react";
-import Chat from "../../components/chat/chat.component";
+import ChatPageContainer from "../../components/chat/chat.container";
 
-const HomePage = () => <Chat />;
+const HomePage = () => <ChatPageContainer />;
 
 export default HomePage;

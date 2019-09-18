@@ -139,7 +139,7 @@ export const getCurrentLocationStartAsync = () => {
     if (navigator.geolocation) {
       let options = {
         enableHighAccuracy: false,
-        timeout: 8000,
+        timeout: 15000,
         maximumAge: 5 * 60 * 1000
       };
       navigator.geolocation.getCurrentPosition(
