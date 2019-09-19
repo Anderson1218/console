@@ -30,11 +30,9 @@ class Chat extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.currentChannel && this.props.currentChannel) {
-      if (prevProps.currentChannel.id !== this.props.currentChannel.id) {
-        this.unsubscribeFromMessages();
-        this.addMessageListener(this.props.currentChannel.id);
-      }
+    if (prevProps.currentChannel.id !== this.props.currentChannel.id) {
+      this.unsubscribeFromMessages();
+      this.addMessageListener(this.props.currentChannel.id);
     }
   }
 
@@ -112,27 +110,23 @@ class Chat extends React.Component {
     return (
       <>
         <Grid.Column width={6} style={{ marginLeft: 320 }}>
-          {currentChannel && (
-            <>
-              <MessageHeader
-                channelName={currentChannel ? `#${currentChannel.name}` : ""}
-                numUniqueUsers={numUniqueUsers}
-                handleSearchChange={this.handleSearchChange}
-                searchLoading={searchLoading}
-              />
-              <Messages
-                currentUser={currentUser}
-                currentChannel={currentChannel}
-                messages={messages}
-                searchResults={searchResults}
-                searchTerm={searchTerm}
-              />
-              <MessageForm
-                currentUser={currentUser}
-                currentChannel={currentChannel}
-              />
-            </>
-          )}
+          <MessageHeader
+            channelName={currentChannel ? `#${currentChannel.name}` : ""}
+            numUniqueUsers={numUniqueUsers}
+            handleSearchChange={this.handleSearchChange}
+            searchLoading={searchLoading}
+          />
+          <Messages
+            currentUser={currentUser}
+            currentChannel={currentChannel}
+            messages={messages}
+            searchResults={searchResults}
+            searchTerm={searchTerm}
+          />
+          <MessageForm
+            currentUser={currentUser}
+            currentChannel={currentChannel}
+          />
         </Grid.Column>
         {/* <Grid.Column width={4}>
         <MetaPanel />

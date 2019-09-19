@@ -1,6 +1,7 @@
 import React from "react";
 import { firestore } from "../../firebase/firebase.utils";
-import { Menu, Icon, Modal, Form, Input, Button } from "semantic-ui-react";
+import { Menu, Icon } from "semantic-ui-react";
+import ChannelModal from "../channel-modal/channel-model.component";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import {
@@ -124,41 +125,12 @@ class Channels extends React.Component {
           </Menu.Item>
           {this.renderChannels(channels)}
         </Menu.Menu>
-
-        {/* Add Channel Modal */}
-        <Modal basic open={modal} onClose={this.closeModal}>
-          <Modal.Header>Add a Channel</Modal.Header>
-          <Modal.Content>
-            <Form onSubmit={this.handleSubmit}>
-              <Form.Field>
-                <Input
-                  fluid
-                  label="Name of Channel"
-                  name="channelName"
-                  onChange={this.handleChange}
-                />
-              </Form.Field>
-
-              <Form.Field>
-                <Input
-                  fluid
-                  label="About the Channel"
-                  name="channelDetails"
-                  onChange={this.handleChange}
-                />
-              </Form.Field>
-            </Form>
-          </Modal.Content>
-
-          <Modal.Actions>
-            <Button color="green" inverted onClick={this.handleSubmit}>
-              <Icon name="checkmark" /> Add
-            </Button>
-            <Button color="red" inverted onClick={this.closeModal}>
-              <Icon name="remove" /> Cancel
-            </Button>
-          </Modal.Actions>
-        </Modal>
+        <ChannelModal
+          modal={modal}
+          closeModal={this.closeModal}
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+        />
       </>
     );
   }

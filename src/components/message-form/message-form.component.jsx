@@ -63,7 +63,6 @@ class MessageForm extends React.Component {
                 this.sendFileMessage(downloadUrl, ref, pathToUpload);
               })
               .catch(err => {
-                console.error(err);
                 this.setState({
                   errors: this.state.errors.concat(err),
                   uploadState: "error",
