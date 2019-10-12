@@ -1,16 +1,10 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 import PrivateRoute from "./components/private-route/private-route.component";
-import { Dimmer, Loader } from "semantic-ui-react";
+import CustomLoader from "./components/custom-loader/custom-loader.component";
 
 import Layout from "./components/layout/layout.component";
-import Homepage from "./pages/homepage/homepage.component";
-import ShopPage from "./pages/shop/shop.component";
-import CheckoutPage from "./pages/checkout/checkout.component";
-import SignInPage from "./pages/signin/sign-in-page.component";
-import SignUpPage from "./pages/signup/sign-up-page.component";
-import GoogleMapPageContainer from "./pages/google-map-page/google-map-page.container";
 import NotFoundPage from "./pages/not-found-page/not-found-page.component";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
@@ -24,6 +18,15 @@ import {
   selectCurrentUser,
   selectUserIsLoading
 } from "./redux/user/user.selectors";
+
+const HomePage = lazy(() => import("./pages/homepage/homepage.component"));
+const ShopPage = lazy(() => import("./pages/shop/shop.component"));
+const CheckoutPage = lazy(() => import("./pages/checkout/checkout.component"));
+const SignInPage = lazy(() => import("./pages/signin/sign-in-page.component"));
+const SignUpPage = lazy(() => import("./pages/signup/sign-up-page.component"));
+const GoogleMapPage = lazy(() =>
+  import("./pages/google-map-page/google-map-page.container")
+);
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -57,47 +60,51 @@ class App extends React.Component {
   render() {
     const { isLoading, currentUser } = this.props;
     return isLoading ? (
-      <Dimmer active>
-        <Loader size="large" content={"Loading..."} />
-      </Dimmer>
+      <CustomLoader />
     ) : (
       <Layout currentUser={currentUser}>
-        <Switch>
-          <PrivateRoute
-            exact
-            path="/"
-            isAuthenticated={currentUser}
-            component={Homepage}
-          />
-          <PrivateRoute
-            path="/shop"
-            isAuthenticated={currentUser}
-            component={ShopPage}
-          />
-          <PrivateRoute
-            exact
-            path="/checkout"
-            isAuthenticated={currentUser}
-            component={CheckoutPage}
-          />
-          <PrivateRoute
-            exact
-            path="/map"
-            isAuthenticated={currentUser}
-            component={GoogleMapPageContainer}
-          />
-          <Route
-            exact
-            path="/signin"
-            render={() => (currentUser ? <Redirect to="/" /> : <SignInPage />)}
-          />
-          <Route
-            exact
-            path="/signup"
-            render={() => (currentUser ? <Redirect to="/" /> : <SignUpPage />)}
-          />
-          <Route component={NotFoundPage} />
-        </Switch>
+        <Suspense fallback={<CustomLoader />}>
+          <Switch>
+            <PrivateRoute
+              exact
+              path="/"
+              isAuthenticated={currentUser}
+              component={HomePage}
+            />
+            <PrivateRoute
+              path="/shop"
+              isAuthenticated={currentUser}
+              component={ShopPage}
+            />
+            <PrivateRoute
+              exact
+              path="/checkout"
+              isAuthenticated={currentUser}
+              component={CheckoutPage}
+            />
+            <PrivateRoute
+              exact
+              path="/map"
+              isAuthenticated={currentUser}
+              component={GoogleMapPage}
+            />
+            <Route
+              exact
+              path="/signin"
+              render={() =>
+                currentUser ? <Redirect to="/" /> : <SignInPage />
+              }
+            />
+            <Route
+              exact
+              path="/signup"
+              render={() =>
+                currentUser ? <Redirect to="/" /> : <SignUpPage />
+              }
+            />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </Suspense>
       </Layout>
     );
   }
