@@ -3,10 +3,9 @@ import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 import PrivateRoute from "./components/private-route/private-route.component";
 import CustomLoader from "./components/custom-loader/custom-loader.component";
-
 import Layout from "./components/layout/layout.component";
 import NotFoundPage from "./pages/not-found-page/not-found-page.component";
-
+import ErrorBundary from "./components/error-boundary/error-bundary.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
 import {
@@ -65,44 +64,46 @@ class App extends React.Component {
       <Layout currentUser={currentUser}>
         <Suspense fallback={<CustomLoader />}>
           <Switch>
-            <PrivateRoute
-              exact
-              path="/"
-              isAuthenticated={currentUser}
-              component={HomePage}
-            />
-            <PrivateRoute
-              path="/shop"
-              isAuthenticated={currentUser}
-              component={ShopPage}
-            />
-            <PrivateRoute
-              exact
-              path="/checkout"
-              isAuthenticated={currentUser}
-              component={CheckoutPage}
-            />
-            <PrivateRoute
-              exact
-              path="/map"
-              isAuthenticated={currentUser}
-              component={GoogleMapPage}
-            />
-            <Route
-              exact
-              path="/signin"
-              render={() =>
-                currentUser ? <Redirect to="/" /> : <SignInPage />
-              }
-            />
-            <Route
-              exact
-              path="/signup"
-              render={() =>
-                currentUser ? <Redirect to="/" /> : <SignUpPage />
-              }
-            />
-            <Route component={NotFoundPage} />
+            <ErrorBundary>
+              <PrivateRoute
+                exact
+                path="/"
+                isAuthenticated={currentUser}
+                component={HomePage}
+              />
+              <PrivateRoute
+                path="/shop"
+                isAuthenticated={currentUser}
+                component={ShopPage}
+              />
+              <PrivateRoute
+                exact
+                path="/checkout"
+                isAuthenticated={currentUser}
+                component={CheckoutPage}
+              />
+              <PrivateRoute
+                exact
+                path="/map"
+                isAuthenticated={currentUser}
+                component={GoogleMapPage}
+              />
+              <Route
+                exact
+                path="/signin"
+                render={() =>
+                  currentUser ? <Redirect to="/" /> : <SignInPage />
+                }
+              />
+              <Route
+                exact
+                path="/signup"
+                render={() =>
+                  currentUser ? <Redirect to="/" /> : <SignUpPage />
+                }
+              />
+              <Route component={NotFoundPage} />
+            </ErrorBundary>
           </Switch>
         </Suspense>
       </Layout>
