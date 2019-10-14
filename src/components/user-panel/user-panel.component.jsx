@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Header, Icon, Dropdown, Image } from "semantic-ui-react";
+import { Header, Icon, Dropdown, Image } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import {
@@ -22,55 +22,60 @@ const dropdownOptions = signOutStartAsync => [
 
 const UserPanel = ({ photoURL, displayName, signOutStartAsync }) => {
   return (
-    <Grid style={{ background: "#4c3c4c" }}>
-      <Grid.Column>
-        <Grid.Row style={{ padding: "1.2em", margin: 0 }}>
-          {/* App Header */}
-          <Header floated="left" inverted as="h2">
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <>
-                  <Icon name="chat" />
-                  <Header.Content>Chat</Header.Content>
-                </>
-              )}
-            />
-            <Route
-              path="/shop"
-              render={() => (
-                <>
-                  <Icon name="shop" />
-                  <Header.Content>Shop</Header.Content>
-                </>
-              )}
-            />
-            <Route
-              path="/checkout"
-              render={() => (
-                <>
-                  <Icon name="money" />
-                  <Header.Content>checkout</Header.Content>
-                </>
-              )}
-            />
-          </Header>
-          {/* User Dropdown  */}
-          <Header style={{ padding: "0.25em" }} as="h4" inverted>
-            <Dropdown
-              trigger={
-                <span>
-                  <Image src={photoURL} avatar spaced="right" />
-                  {displayName}
-                </span>
-              }
-              options={dropdownOptions(signOutStartAsync)}
-            />
-          </Header>
-        </Grid.Row>
-      </Grid.Column>
-    </Grid>
+    <div style={{ padding: "20px" }}>
+      {/* App Header */}
+      <Header inverted as="h2">
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <>
+              <Icon name="chat" />
+              <Header.Content>Chat</Header.Content>
+            </>
+          )}
+        />
+        <Route
+          path="/shop"
+          render={() => (
+            <>
+              <Icon name="shop" />
+              <Header.Content>Shop</Header.Content>
+            </>
+          )}
+        />
+        <Route
+          path="/checkout"
+          render={() => (
+            <>
+              <Icon name="money" />
+              <Header.Content>checkout</Header.Content>
+            </>
+          )}
+        />
+        <Route
+          path="/map"
+          render={() => (
+            <>
+              <Icon name="map" />
+              <Header.Content>Map</Header.Content>
+            </>
+          )}
+        />
+      </Header>
+      {/* User Dropdown  */}
+      <Header style={{ padding: "0.25em" }} as="h4" inverted>
+        <Dropdown
+          trigger={
+            <span>
+              <Image src={photoURL} avatar spaced="right" />
+              {displayName}
+            </span>
+          }
+          options={dropdownOptions(signOutStartAsync)}
+        />
+      </Header>
+    </div>
   );
 };
 

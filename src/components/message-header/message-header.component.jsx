@@ -10,7 +10,10 @@ class MessageHeader extends React.Component {
       searchLoading
     } = this.props;
     return (
-      <Segment clearing style={{ background: "rgba(54,57,63,0.3)" }}>
+      <Segment
+        clearing
+        style={{ background: "rgba(54,57,63,0.3)", width: "50em" }}
+      >
         {/* Channel Title */}
         <Header fluid="true" as="h2" floated="left" style={{ marginBottom: 0 }}>
           <span>{channelName}</span>

@@ -153,7 +153,11 @@ class MessageForm extends React.Component {
     return (
       <Segment
         className="message__form"
-        style={{ background: "rgba(54,57,63,0.3)", marginBottom: "20px" }}
+        style={{
+          background: "rgba(54,57,63,0.3)",
+          marginBottom: "2rem",
+          width: "50em"
+        }}
       >
         <Input
           transparent

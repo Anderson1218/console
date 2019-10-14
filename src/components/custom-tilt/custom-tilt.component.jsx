@@ -9,18 +9,16 @@ const CustomTilt = () => (
     className="Tilt"
     options={{ max: 25 }}
     style={{
-      position: "absolute",
-      height: 200,
-      width: 200,
-      top: "5rem",
-      left: "5rem",
+      height: "15rem",
+      width: "15rem",
       boxShadow: "0.5em 0.5em 1em 0.5em rgba(0, 0, 0, 0.5)",
       display: "flex",
       justfyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      alignSelf: "flex-start"
     }}
   >
-    <img alt="img" src={imgUrl} />
+    <img alt="img" src={imgUrl} style={{ marginLeft: "1.5rem" }} />
   </Tilt>
 );
 

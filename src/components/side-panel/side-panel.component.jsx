@@ -12,10 +12,15 @@ const SidePanel = () => {
     <Menu
       size="large"
       inverted
-      fixed="left"
       vertical
-      style={{ background: "#4c3c4c", fontSize: "1.2rem" }}
-      className="side-panel"
+      style={{
+        background: "#4c3c4c",
+        fontSize: "1.2rem",
+        height: "100%",
+        border: "solid 7px #778899",
+        borderStyle: "outset",
+        marginLeft: "-1.5rem"
+      }}
     >
       <UserPanel />
       <Route exact path="/" component={Channels} />

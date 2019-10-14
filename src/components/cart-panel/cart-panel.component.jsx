@@ -8,7 +8,14 @@ import { selectCartHidden } from "../../redux/cart/cart.selectors";
 
 const CartPanel = ({ hidden }) => {
   return (
-    <Menu.Menu style={{ paddingBottom: "2em" }}>
+    <Menu.Menu
+      style={{
+        paddingBottom: "2em",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+      }}
+    >
       <Menu.Item>
         <CartIcon />
       </Menu.Item>

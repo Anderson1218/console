@@ -1,5 +1,4 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
 import MessageHeader from "../message-header/message-header.component";
 import Messages from "../messages/messages.component";
 import MessageForm from "../message-form/message-form.component";
@@ -109,28 +108,23 @@ class Chat extends React.Component {
 
     return (
       <>
-        <Grid.Column width={6} style={{ marginLeft: 320 }}>
-          <MessageHeader
-            channelName={currentChannel ? `#${currentChannel.name}` : ""}
-            numUniqueUsers={numUniqueUsers}
-            handleSearchChange={this.handleSearchChange}
-            searchLoading={searchLoading}
-          />
-          <Messages
-            currentUser={currentUser}
-            currentChannel={currentChannel}
-            messages={messages}
-            searchResults={searchResults}
-            searchTerm={searchTerm}
-          />
-          <MessageForm
-            currentUser={currentUser}
-            currentChannel={currentChannel}
-          />
-        </Grid.Column>
-        {/* <Grid.Column width={4}>
-        <MetaPanel />
-      </Grid.Column> */}
+        <MessageHeader
+          channelName={currentChannel ? `#${currentChannel.name}` : ""}
+          numUniqueUsers={numUniqueUsers}
+          handleSearchChange={this.handleSearchChange}
+          searchLoading={searchLoading}
+        />
+        <Messages
+          currentUser={currentUser}
+          currentChannel={currentChannel}
+          messages={messages}
+          searchResults={searchResults}
+          searchTerm={searchTerm}
+        />
+        <MessageForm
+          currentUser={currentUser}
+          currentChannel={currentChannel}
+        />
       </>
     );
   }

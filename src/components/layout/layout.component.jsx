@@ -21,16 +21,19 @@ const Layout = props => {
   return (
     <Container fluid>
       <Grid
-        columns="equal"
         style={{
           height: "100vh",
           overflow: "scroll"
         }}
       >
         <Particles className="particles" params={particlesOptions} />
-        {props.currentUser && <GuidePanel />}
-        {props.currentUser && <SidePanel />}
-        {props.children}
+        <Grid.Column width={1}>
+          {props.currentUser && <GuidePanel />}
+        </Grid.Column>
+        <Grid.Column width={3}>
+          {props.currentUser && <SidePanel />}
+        </Grid.Column>
+        <Grid.Column width={12}>{props.children}</Grid.Column>
       </Grid>
     </Container>
   );

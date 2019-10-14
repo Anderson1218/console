@@ -28,8 +28,8 @@ class Messages extends React.Component {
   render() {
     const { messages, searchResults, searchTerm } = this.props;
     return (
-      <Segment style={{ background: "rgba(54,57,63,0.3)" }}>
-        <Comment.Group style={{ height: "550px", overflowY: "scroll" }}>
+      <Segment style={{ background: "rgba(54,57,63,0.3)", width: "50em" }}>
+        <Comment.Group style={{ height: "40em", overflowY: "scroll" }}>
           {searchTerm
             ? this.renderMessages(searchResults)
             : this.renderMessages(messages)}

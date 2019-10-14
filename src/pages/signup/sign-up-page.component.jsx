@@ -5,12 +5,10 @@ import SignUp from "../../components/sign-up/sign-up.component";
 import CustomTilt from "../../components/custom-tilt/custom-tilt.component";
 
 const SignUpPage = () => (
-  <>
+  <div className="sign-up-page">
     <CustomTilt />
-    <div className="sign-up-page">
-      <SignUp />
-    </div>
-  </>
+    <SignUp />
+  </div>
 );
 
 export default SignUpPage;

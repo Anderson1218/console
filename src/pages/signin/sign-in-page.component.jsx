@@ -6,8 +6,8 @@ import CustomTilt from "../../components/custom-tilt/custom-tilt.component";
 
 const SignInPage = () => (
   <>
-    <CustomTilt />
     <div className="sign-in-page">
+      <CustomTilt />
       <SignIn />
     </div>
   </>
