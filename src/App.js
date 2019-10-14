@@ -63,8 +63,8 @@ class App extends React.Component {
     ) : (
       <Layout currentUser={currentUser}>
         <Suspense fallback={<CustomLoader />}>
-          <Switch>
-            <ErrorBundary>
+          <ErrorBundary>
+            <Switch>
               <PrivateRoute
                 exact
                 path="/"
@@ -103,8 +103,8 @@ class App extends React.Component {
                 }
               />
               <Route component={NotFoundPage} />
-            </ErrorBundary>
-          </Switch>
+            </Switch>
+          </ErrorBundary>
         </Suspense>
       </Layout>
     );
