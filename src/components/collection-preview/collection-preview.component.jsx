@@ -6,12 +6,6 @@ import { Header } from "semantic-ui-react";
 
 const CollectionPreview = ({ title, items, history, match, routeName }) => (
   <div className="collection-preview">
-    {/* <h1
-      className="title"
-      onClick={() => history.push(`${match.path}/${routeName}`)}
-    >
-      {title.toUpperCase() + " ( Click here to see more! )"}
-    </h1> */}
     <Header
       as="h1"
       color="teal"

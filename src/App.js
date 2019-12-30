@@ -19,8 +19,8 @@ import {
 } from "./redux/user/user.selectors";
 
 const HomePage = lazy(() => import("./pages/homepage/homepage.component"));
-const ShopPage = lazy(() => import("./pages/shop/shop.component"));
-const CheckoutPage = lazy(() => import("./pages/checkout/checkout.component"));
+// const ShopPage = lazy(() => import("./pages/shop/shop.component"));
+// const CheckoutPage = lazy(() => import("./pages/checkout/checkout.component"));
 const SignInPage = lazy(() => import("./pages/signin/sign-in-page.component"));
 const SignUpPage = lazy(() => import("./pages/signup/sign-up-page.component"));
 const GoogleMapPage = lazy(() =>
@@ -71,7 +71,7 @@ class App extends React.Component {
                 isAuthenticated={currentUser}
                 component={HomePage}
               />
-              <PrivateRoute
+              {/* <PrivateRoute
                 path="/shop"
                 isAuthenticated={currentUser}
                 component={ShopPage}
@@ -81,7 +81,7 @@ class App extends React.Component {
                 path="/checkout"
                 isAuthenticated={currentUser}
                 component={CheckoutPage}
-              />
+              /> */}
               <PrivateRoute
                 exact
                 path="/map"
@@ -120,7 +120,4 @@ const mapDispatchToProps = dispatch => ({
   getCurrentLocationStartAsync: () => dispatch(getCurrentLocationStartAsync())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

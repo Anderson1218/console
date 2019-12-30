@@ -1,8 +1,7 @@
 import React from "react";
 import Tilt from "react-tilt";
 
-const imgUrl =
-  "https://scontent.ftpe7-3.fna.fbcdn.net/v/t1.0-1/p160x160/51479936_1563908063712666_1276508643088400384_n.jpg?_nc_cat=108&_nc_oc=AQnws6OG8F1juJkpoGoxNJCyzpulB0zYgebx06Qr8TmuKFQZxU3mcTS4hB-L-K2Brnc&_nc_ht=scontent.ftpe7-3.fna&oh=849d00cdef415a3fe5c13237f3e6ed18&oe=5DFBD4DE";
+const imgUrl = "https://avatars3.githubusercontent.com/u/8858082?s=460&v=4";
 
 const CustomTilt = () => (
   <Tilt
@@ -15,10 +14,18 @@ const CustomTilt = () => (
       display: "flex",
       justfyContent: "center",
       alignItems: "center",
-      alignSelf: "flex-start"
+      alignSelf: "flex-start",
+      minWidth: "200px"
     }}
   >
-    <img alt="img" src={imgUrl} style={{ marginLeft: "1.5rem" }} />
+    <div>
+      <img
+        alt="img"
+        width="150px"
+        src={imgUrl}
+        style={{ marginLeft: "1.6rem" }}
+      />
+    </div>
   </Tilt>
 );
 
